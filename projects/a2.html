@@ -6,10 +6,11 @@
 -->
 <html>
   <head>
-    <title>Generic - Editorial by HTML5 UP</title>
+    <title>Project 2: Potential Field Control</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
   </head>
   <body class="is-preload">
 
@@ -35,27 +36,48 @@
                     <strong>Project 2:</strong> Potential Field Control
                   </header>
 
-                  <span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+                  <!-- <span class="image main"><img src="../images/pic11.jpg" alt="" /></span> -->
 
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <p>In <a href="a1.html">Project 1</a>, we saw that we can control the robot to maintain a goal distance to the wall by correcting our control signals based on the sensor data we observe. We say that our wall following controller was <emph>maintaining a setpoint</emph>, in this case, maintaining a specific goal distance from the wall. A common problem for an autonomous robot is to drive to a goal location (like we did in <a href="a0.html">Project 0</a>!). We could try using our setpoint controller to drive to a goal, but it won't work if there's an obstacle in the way.</p>
+
+                  <p><span class="image left"><img src="../images/potential_field.png" alt=""/></span>
+                    Another way we can drive to a goal autonomously is to use <strong>potential field control</strong>. We can imagine that our goal is a magnet, pulling the robot towards it. We can treat obstacles like repelling forces, pushing the robot away. If we combine these two forces, we might get a potential field that looks like the example on the left. To get to the goal, our robot can follow the path of least resistance, moving in the direction of the strongest force at its location at each time step. Another way to say this is that our robot is following the steepest slope, or <emph>gradient</emph>, of the field. This algorithm is called <strong>gradient descent</strong>.</p>
+
+                  <p>For this project, you will write code in C++ to calculate the potential fields the robot needs to reach a goal without colliding with any obstacles. You will be given a map which tells you where the obstacles are, along with a start and goal position. One field should draw the robot towards the goal, and the other should push the robot away from the obstacles. We've made a web app which you can use to develop your code on your computer (see the <a href="#setup_instructions">setup instructions</a> below to get started. Once your algorithm is working, you can <a href="#robot_instructions">try it out on the robot!</a></p>
 
                   <hr class="major" />
 
-                  <h2>Interdum sed dapibus</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+                  <h2 id="setup_instructions">Setting up the code</h2>
+
+                  <h3>Prerequisites</h3>
+
+                  <p>Before you start, make sure you have followed the <a href="../tutorials/setup.html">setup instructions</a> and have installed Docker, Git and VSCode. For this assignment, you will be running your code in a Docker container. The web app will run in the same Docker container. The Docker image includes all the dependencies you need to write your code and run the app, so you only need to have Docker installed to get started.</p>
+
+                  <h3>Starting the app</h3>
+
+                  <p>First, download the <code>rob102-path-planning</code> code from <a href="https://github.com/janapavlasek/rob102-path-planning">Github</a> (<emph>Note: How to acquire code TBD</emph>). This code will be used for Project 2 and 3. Open the code in VSCode, and open a Bash terminal. First, build the docker image with the script provided:</p>
+                  <pre><code>./docker_build.sh</code></pre>
+
+                  <p>To run the Docker container, do:</p>
+                  <pre><code>./docker_run.sh</code></pre>
+
+                  <p>You should see a container called <code>rob102_planning</code> running under "Docker Containers" in VSCode's Explorer, if you have installed the Docker extensions for VSCode. When Docker is running, you should see the app, as shown below, when you navigate to <a href="http://localhost:8000">http://localhost:8000</a> in your browser.</p>
+
+                  <span class="image main"><img src="../images/webapp.png" alt="" style="max-width:600px;"/></span>
+
+                  <h3>Writing the code</h3>
+
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
 
                   <hr class="major" />
 
-                  <h2>Magna etiam veroeros</h2>
+                  <h2>Project Description</h2>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
                   <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
 
                   <hr class="major" />
 
-                  <h2>Lorem aliquam bibendum</h2>
+                  <h2 id="robot_instructions">Running your code on the robot</h2>
                   <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
 
@@ -81,11 +103,11 @@
                     <li>
                       <span class="opener active">Projects</span>
                       <ul>
-                        <li><a href="a0.html">Project 0</a></li>
-                        <li><a href="a1.html">Project 1</a></li>
-                        <li><a href="a2.html">Project 2</a></li>
-                        <li><a href="a3.html">Project 3</a></li>
-                        <li><a href="a4.html">Project 4</a></li>
+                        <li><a href="a0.html">Project 0: Introduction</a></li>
+                        <li><a href="a1.html">Project 1: Wall Following</a></li>
+                        <li><a href="a2.html">Project 2: Potential Field Control</a></li>
+                        <li><a href="a3.html">Project 3: Path Planning</a></li>
+                        <li><a href="a4.html">Project 4: Machine Learning</a></li>
                       </ul>
                     </li>
                     <li>
