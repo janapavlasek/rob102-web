@@ -1408,6 +1408,51 @@ ul.contact {
     ul.contact li a {
       color: inherit; }
 
+/* TODO */
+ul.todo {
+  background: #FFCB0524;
+  border: solid 1px #FFCB05;
+  border-radius: 0.375em;
+  color: #2f3337;
+  list-style: none;
+  padding: 1em; }
+  ul.todo li {
+    text-decoration: none;
+    border-top: solid 1px #FFCB05;
+    margin: 1.2em 0 0 0;
+    padding: 1.2em 0 0 3em;
+    position: relative; }
+    ul.todo li:before {
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      display: inline-block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      line-height: 1;
+      text-transform: none !important;
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 400; }
+    ul.todo li:before {
+      color: #00274C;
+      display: inline-block;
+      font-size: 1.5em;
+      height: 1.125em;
+      left: 0;
+      line-height: 1.125em;
+      position: absolute;
+      text-align: center;
+      top: 1em;
+      width: 1.5em; }
+    ul.todo li:first-child {
+      border-top: 0;
+      margin-top: 0;
+      padding-top: 0; }
+      ul.todo li:first-child:before {
+        top: 0; }
+    ul.todo li a {
+      color: inherit; }
+
 /* Pagination */
 ul.pagination {
   cursor: default;

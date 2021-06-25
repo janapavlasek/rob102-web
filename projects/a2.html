@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/stackoverflow-light.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
   </head>
   <body class="is-preload">
 
@@ -36,8 +38,6 @@
                     <strong>Project 2:</strong> Potential Field Control
                   </header>
 
-                  <!-- <span class="image main"><img src="../images/pic11.jpg" alt="" /></span> -->
-
                   <p>In <a href="a1.html">Project 1</a>, we saw that we can control the robot to maintain a goal distance to the wall by correcting our control signals based on the sensor data we observe. We say that our wall following controller was <emph>maintaining a setpoint</emph>, in this case, maintaining a specific goal distance from the wall. A common problem for an autonomous robot is to drive to a goal location (like we did in <a href="a0.html">Project 0</a>!). We could try using our setpoint controller to drive to a goal, but it won't work if there's an obstacle in the way.</p>
 
                   <p><span class="image left"><img src="../images/potential_field.png" alt=""/></span>
@@ -56,24 +56,94 @@
                   <h3>Starting the app</h3>
 
                   <p>First, download the <code>rob102-path-planning</code> code from <a href="https://github.com/janapavlasek/rob102-path-planning">Github</a> (<emph>Note: How to acquire code TBD</emph>). This code will be used for Project 2 and 3. Open the code in VSCode, and open a Bash terminal. First, build the docker image with the script provided:</p>
-                  <pre><code>./docker_build.sh</code></pre>
+                  <pre><code class="language-bash">./docker_build.sh</code></pre>
 
                   <p>To run the Docker container, do:</p>
-                  <pre><code>./docker_run.sh</code></pre>
+                  <pre><code class="language-bash">./docker_run.sh</code></pre>
 
-                  <p>You should see a container called <code>rob102_planning</code> running under "Docker Containers" in VSCode's Explorer, if you have installed the Docker extensions for VSCode. When Docker is running, you should see the app, as shown below, when you navigate to <a href="http://localhost:8000">http://localhost:8000</a> in your browser.</p>
+                  <p>You should see a container called <code>rob102_planning</code> running under &quotDocker Containers&quot in VSCode's Explorer, if you have installed the Docker extensions for VSCode. When Docker is running, you should see the app, as shown below, when you navigate to <a href="http://localhost:8000">http://localhost:8000</a> in your browser.</p>
 
                   <span class="image main"><img src="../images/webapp.png" alt="" style="max-width:600px;"/></span>
 
                   <h3>Writing the code</h3>
 
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <p>You will be writing code in the <code>rob102-path-planning/path_planning</code> directory. This directory is <emph>mounted</emph> in the Docker container. When you modify the files in VSCode from your computer, those changes will be reflected in the Docker container as well.</p>
+
+                  <p>You will compile and execute your code in the Docker container. To do this, you will open a terminal inside the container. Right-click on the running docker image under &quotDocker Containers&quot in VSCode and select &quotExecute in bash.&quot This will open up a terminal which you can use to interact with the container. To compile the code, first enter into the <code>build</code> directory for this project, where we will be storing all the binaries and build files:</p>
+                  <pre><code class="language-bash">cd /code/build</code></pre>
+
+                  <p>To compile the code, we will use CMake, which will help find the dependencies and link them to our code during compilation. This is a two step process:</p>
+                  <pre><code class="language-bash">cmake ..
+make</code></pre>
+                  <p>The <code>cmake</code> command sets up our project for compilation by finding all the libraries and compilers we need. The argument <code>..</code> points to the directory one folder back from the current folder (in this case, <code>/code</code>), where the file <code>CMakeLists.txt</code> is stored. This gives CMake instructions about how to compile the code. The <code>make</code> command performs the compilation. Generally, you only have to run <code>cmake</code> once. The <code>make</code> command needs to be rerun every time you modify the code.</p>
+
+                  <p>We have provided code in <code>server.cpp</code> which communicates with the app and calls the path planning functions that you will be writing. It opens up a websocket that connects to the app. When you upload a map and send a planning goal, the server will load the map and call the planning functions for you. When the plan is found, the server will send the plan to the app to display. To run the server, in the Docker container, within the <code>build</code> directory, do:</p>
+                  <pre><code>./path_planning/path_planning_server</code></pre>
+                  <p>You should see a message when the connection is open, and the status message on the app should turn green and say &quotConnected.&quot Right now, we haven't written any code so the app won't do much. Move on to the <a href="#description">Project Description</a> section to start writing some code!</p>
 
                   <hr class="major" />
 
-                  <h2>Project Description</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <h2 id="description">Project Description</h2>
+
+                  <p>By the end of this project, you will have implemented a distance transform, which will calculate the distance from each cell to the nearest obstacle. It should look something like this (temp image):</p>
+
+                  <span class="image main"><img src="../images/dist_tf.png" alt="" style="max-width:600px;"/></span>
+
+                  <h3>Representing a map in code</h3>
+
+                  <p>Imagine a robot is in an environment like the one shown below. The dark grey cells are obstacles. The robot is equipped with a mapping system so it has knowledge of where the obstacles are.</p>
+
+                  <span class="image main"><img src="../images/grid_graph/map_no_grid.png" alt="" style="max-width:400px;"/></span>
+
+                  <p>We want to find a way to represent the map of this scene as a computational structure. We start by drawing a grid on our map. Then, we will mark each cell with an obstacle in it as <emph>occupied</emph> (gray), and each cell without an obstacle as <emph>free</emph> (white).</p>
+
+                  <span class="image main"><img src="../images/grid_graph/map_as_grid.png" alt="" style="max-width:800px;"/></span>
+
+                  <p>The mapping system gives each cell an <emph>odds value</emph>, in the range <code>[-128, 127]</code>, which represents how likely it is that the cell is occupied. If the value is high, the odds that the cell is occupied is high. Low odds values mean the cell is likely to be free. Each cell has a corresponding coordinate in the grid, which is represented by its <emph>row</emph> and <emph>column</emph>. We refer to the cell by its coordinate <code>(i,j)</code>, where <code>i</code> is the cell's row, and <code>j</code> is the column.</p>
+
+                  <span class="image main"><img src="../images/grid_graph/map_odds.png" alt="" style="max-width:500px;"/></span>
+
+                  <p>Next, we need a way to store the cell odds data in code. We will use an array to do this. To store our two dimensional grid as a single array, we will line up each row end to end. Cell <code>(0,0)</code> will be stored at array index <code>0</code>, cell <code>(0, 1)</code> at index <code>1</code>, and cell <code>(1, 0)</code> at index <code>10</code>. The resulting array will look like this:</p>
+
+                  <span class="image main"><img src="../images/grid_graph/cell_odds.png" alt=""/></span>
+
+                  <h3>The <code>GridGraph</code> Struct</h3>
+
+                  <p>Information about the map for a particular environment is stored in a provided struct called <code>GridGraph</code>. You can visualize the available maps by selecting &quotChoose File&quot in the app, and choosing one of the maps from the <code>data</code> folder in the code (choose a file with the <code>.map</code> extension, not <code>.png</code>). When you click &quotUpload Map&quot, you should see the map in displayed in the app. The struct is defined in the header file <code>include/path_planning/grid_graph.h</code>. The template code looks like this:</p>
+                  <pre><code class="language-cpp">struct GridGraph
+{
+    GridGraph() :
+        width(-1),
+        height(-1),
+        origin_x(0),
+        origin_y(0),
+        meters_per_cell(0),
+        collision_radius(0.15),
+        threshold(-100)
+    {
+    };
+
+    int width, height;
+    double origin_x, origin_y, meters_per_cell;
+    double collision_radius;
+    int8_t threshold;
+    std::vector&ltint8_t&gt cell_odds;
+};</code></pre>
+
+                  <p>The member variables <code>width</code> and <code>height</code> store the graph width and height, in cells. The variables <code>origin_x</code> and <code>origin_y</code> correspond to the global position in meters of the cell <code>(0, 0)</code>. This allows us to determine where the origin of the map is. The variable <code>meters_per_cell</code> contains the size of each cell, in meters. Finally, the <code>cell_odds</code> variable is a vector containing the odds value of each cell, as described above.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>cellToIdx()</code>. It should accept a cell coordinate and a graph as arguments, and return an <code>int</code> containing the corresponding array index for the cell.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>idxToCell()</code>. It should accept an array index and a graph as arguments, and return a <code>Cell</code> containing the corresponding cell coordinate for the array index.</li>
+                  </ul>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">Other graph functions can go here.</li>
+                  </ul>
+
+                  <h3>The Distance Transform</h3>
+
+                  <p>TODO.</p>
 
                   <hr class="major" />
 
@@ -150,6 +220,7 @@
       <script src="../assets/js/breakpoints.min.js"></script>
       <script src="../assets/js/util.js"></script>
       <script src="../assets/js/main.js"></script>
+      <script>hljs.highlightAll();</script>
 
   </body>
 </html>
