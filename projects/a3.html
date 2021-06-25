@@ -10,6 +10,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/stackoverflow-light.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
   </head>
   <body class="is-preload">
 
@@ -35,28 +38,100 @@
                     <strong>Project 3:</strong> Optimal Path Planning
                   </header>
 
-                  <span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+                  <p>In <a href="a2.html">Project 2</a>, we wrote a controller that could reach a goal using potential fields. We called this a <emph>reactive</emph> controller, because it makes decisions at each time step based on its local information to correct its state. It doesn't plan ahead to try to find the best path it can. We saw some examples where the algorithm gets stuck and can't find a path to the goal. </p>
 
-                  <p>In <a href="a2.html">Project 2</a>, we wrote a controller that could reach a goal using potential fields. We called this a <emph>reactive</emph> controller, because it makes decisions at each time step based on its local information to correct its state. It doesn't plan ahead to try to find the best path it can.</p>
+                  <p>In this project, we will write an <strong>optimal planning algorithm</strong>, which will find the <emph>shortest</emph> path to the goal every time. When you've completed the project, you'll be able to find paths like this one:</p>
 
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <span class="image main"><img src="../images/astar_success.png" alt="" style="max-width:600px;"/></span>
 
-                  <hr class="major" />
-
-                  <h2>Interdum sed dapibus</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <p>We will use the same web app that we did for <a href="a2.html">Project 2</a>. You can review the instructions for running the app and using the Docker container <a href="a2.html#setup_instructions">here</a>. We will write code the same way and reuse a lot of the same functions and classes.</p>
 
                   <hr class="major" />
 
-                  <h2>Magna etiam veroeros</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <h2 id="description">Project Description</h2>
+
+                  <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search. For this project, we'll need some more information to keep track of certain data.</p>
+
+                  <h3>Storing Node Data</h3>
+
+                  <p>In order to perform graph search, we need to keep track of a few things for each cell:</p>
+                    <ol>
+                      <li>The cell coordinate, <code>(i,j)</code>,</li>
+                      <li>The index where the cell is stored in the graph data structure,</li>
+                      <li>The distance from the start node to the cell along the current path,</li>
+                      <li>The cell's parent along the current path,</li>
+                      <li>(A* only) The cell's score.</li>
+                    </ol>
+                  <p>Using the concepts we have learned so far, design code to store this data. Then, modify <code>GridGraph</code> to store the node information.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>grid_graph.h</code> file, design a data structure to store the cell information and modify <code>GridGraph</code> to add any new member variables accordingly.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>initGraph()</code> such that it initializes the cell data. You can assume the graph will be loaded when the function is called.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>getParent()</code> so it returns the index of the parent of the given cell. If a cell does not have a parent, it should return -1.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You might consider implementing a struct to represent your cell node and store a vector of cell node structs in <code>GridGraph</code>.</li>
+                  </ul>
+
+                  <h3 id="sec_dfs">Depth First Search</h3>
+
+                  <p>In this section, you will write code to implement a <strong>Depth First Search (DFS)</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>depthFirstSearch()</code>, which looks like this:</p>
+                  <pre><code class="language-cpp">std::vector&ltCell&gt depthFirstSearch(GridGraph&amp graph, const Cell&amp start, const Cell&amp goal,
+                                   std::shared_ptr&ltWsServer::Connection&gt connection)
+{
+    // ...
+}</code></pre>
+                  <p>Assume the graph is loaded with the corresponding map data. You will call <code>initGraph()</code> to make sure that all the cells are initialized. The start and goal position are passed in as <code>Cell</code> structs. <code>Cell</code> has two integer member variables: <code>i</code> and <code>j</code>, corresponding to the row and column coordinates of the cell. You can use the <code>cellToIdx()</code> function to convert these to index values. When the path is found, your code should return a vector of cells, <code>std::vector&ltCell&gt</code>. You can use the provided function <code>tracePath()</code>, as follows:</p>
+                  <pre><code class="language-cpp">path = tracePath(goal_idx, graph);</code></pre>
+
+                  <p>where <code>goal_idx</code> is an integer value which stores the index of the goal. If you have correctly maintained the parent structure of the cells and the <code>idxToCell()</code> and <code>getParent()</code> functions are implemented, this will return the path to the start node. The start node should not have a parent. If no path was found, your code should return an empty vector.</p>
+
+                  <p>The function also accepts a <code>connection</code> argument. This is to interface with helper functions which will help you visualize your algorithm in the web app. To mark a cell as visited in the front end, do:</p>
+                  <pre><code class="language-cpp">server_utils::sendVisitedCell(connection, i, j);</code></pre>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement Depth First Search in function <code>depthFirstSearch()</code>.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> DFS maintains a list of nodes to visit using a Last-In-First-Out data structure (or a stack). A C++ <code>std::vector</code> can serve this purpose. Assuming you have a vector <code>v</code>, <code>v.push_back(my_node_idx)</code> will push a value onto the stack, <code>v.back()</code> will return the value at the end of the vector (or the top of the stack), and <code>v.pop_back()</code> will remove the last element of the vector.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Your visit list should store integers corresponding to the indices of the nodes of interest. You can use these indices to retrieve and modify cell data directly in the graph. Do not push any structs your graph stores onto the visit list! This makes a <emph>copy</emph> of the data, so any changes you make would not be reflected in the graph.</li>
+                  </ul>
+
+                  <h3 id="sec_bfs">Breadth First Search</h3>
+
+                  <p>In this section, you will write code to implement a <strong>Breadth First Search (BFS)</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>breadthFirstSearch()</code>. This function looks a lot like the one for <a href="#sec_dfs">DFS</a>. Refer to that section for details.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement Breadth First Search in function <code>breadthFirstSearch()</code>.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> BFS maintains a list of nodes to visit using a First-In-First-Out data structure (or a queue). C++ has a queue implementation called <code>std::queue</code>. Assuming you have a queue <code>q</code>, <code>q.push(my_node_idx)</code> will push a value onto the back of the queue, <code>q.front()</code> will return the value at the front of the queue, and <code>q.pop()</code> will remove the first element of the queue.</li>
+                  </ul>
+
+                  <h3 id="sec_astar">A-Star Search</h3>
+
+                  <p>In this section, you will write code to implement <strong>A-Star Search</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>aStarSearch()</code>. This function looks a lot like the one for <a href="#sec_dfs">DFS</a> and <a href="#sec_bfs">BFS</a>. However, you will need to maintain the f-score of the nodes you explore.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>grid_graph.h</code> file, extend your cell node data to include the f-score of the node.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, implement the function <code>getScore()</code> to return a double corresponding to the f-score of the given cell index.</li>
+                  </ul>
+
+                  <p>In A-Star, the next node to explore is the one with the <emph>lowest f-score</emph>. The function <code>findLowestScore()</code> takes a <code>std::vector</code> of integers as an argument, along with the graph, and returns the index of the lowest score node <emph>in the list</emph>. You can use this function as follows to get the lowest scoring node, and then remove it from the list:</p>
+                  <pre><code class="language-cpp">int min_score_idx = findLowestScore(visit_list, graph);
+int current = visit_list[min_score_idx];
+visit_list.erase(visit_list.begin() + min_score_idx);</code></pre>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement A-Star Search in function <code>aStarSearch()</code>.</li>
+                  </ul>
 
                   <hr class="major" />
 
-                  <h2>Lorem aliquam bibendum</h2>
+                  <h2 id="robot_instructions">Running your code on the robot</h2>
                   <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
 
@@ -129,6 +204,7 @@
       <script src="../assets/js/breakpoints.min.js"></script>
       <script src="../assets/js/util.js"></script>
       <script src="../assets/js/main.js"></script>
+      <script>hljs.highlightAll();</script>
 
   </body>
 </html>
