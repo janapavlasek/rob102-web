@@ -50,7 +50,10 @@
 
                   <h2 id="description">Project Description</h2>
 
-                  <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search. For this project, we'll need some more information to keep track of certain data.</p>
+                  <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search. For this project, we'll need some more information to keep track of certain data. In the following sections, we will implement some utility functions that will help us implement graph search algorithms. You can test that these functions are correctly implemented using the provided test scripts, as follows:</p>
+                  <pre><code class="language-bash">cd build
+./path_planning/test_graph</code></pre>
+                  <p>All tests should pass before you move on to implementing graph search.</p>
 
                   <h3>Storing Node Data</h3>
 
@@ -72,6 +75,18 @@
 
                   <ul class="hint">
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> You might consider implementing a struct to represent your cell node and store a vector of cell node structs in <code>GridGraph</code>.</li>
+                  </ul>
+
+                  <h3>Getting Graph Neighbors</h3>
+
+                  <p>We need a function that returns the neighbors of a cell at a given index. A 4-connected graph considers nodes to the left, right, top, and bottom of a cell as neighbors. An 8-connected graph considers the same nodes as a 4-connected graph plus nodes diagonal to the current node as neighbors.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete functions <code>findNeighbors4()</code> and <code>findNeighbors8()</code> such that they return a vector containing the indices of each neighbor. Include all the neighboring cells regardless of whether they are occupied.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not include any cells which fall outside the bounds of the graph as neighbors.</li>
                   </ul>
 
                   <h3 id="sec_dfs">Depth First Search</h3>
