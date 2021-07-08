@@ -38,13 +38,38 @@
                     <strong>Tutorial:</strong> Computer Setup
                   </header>
 
-                  <h2>Install VSCode</h2>
+                  <h2 id="install_git">Install Git</h2>
 
-                  <p>Install VSCode. TODO. See <a href="https://eecs280staff.github.io/p1-stats/setup_vscode.html">EECS 280 instructions</a>. Install the Docker and Docker Explorer extensions.</p>
+                  <h3>Windows</h3>
+
+                  <p>We will use Git Bash to interface with Github on Windows. We will also use Git Bash as our terminal when we are developing code. Install Git and Git Bash from <a href="https://git-scm.com/downloads">here</a>.</p>
+
+                  <h3>Mac</h3>
+
+                  <p>Open a command prompt and type <code>git --version</code> on the command line. The version will print if Git is installed. If Git is not installed, you will be prompted to install it. Follow the instructions to do so.</p>
+
+                  <h3>Linux</h3>
+
+                  <p>Check if Git is installed by opening a command prompt and typing <code>git --version</code> on the command line. The version will print if Git is installed. If you get a message saying the command <code>git</code> does not exist, install as follows:</p>
+                  <pre><code class="language-bash">sudo apt install git-all</code></pre>
 
                   <hr class="major" />
 
-                  <h2>Install Docker</h2>
+                  <h2 id="install_vscode">Install VSCode</h2>
+
+                  <p>Install the Visual Studio Code IDE using the instructions for your OS <a href="https://code.visualstudio.com/download">here</a>. Note that VSCode is different from Visual Studio.</p>
+
+                  <p>If you're using Windows, you should set your default terminal to use Git Bash. To do this, open VSCode and open the command pallette by pressing <code>F1</code> (or <code>Ctrl-Shift-P</code>). Search for the option &quotTerminal: Select Default Profile&quot:</p>
+                  <span class="image main"><img src="../images/setup/terminal-cmd.png" alt="" style="max-width:800px;"/></span>
+
+                  <p>Select the option &quotGit Bash&quot:</p>
+                  <span class="image main"><img src="../images/setup/terminal-select.png" alt="" style="max-width:800px;"/></span>
+
+                  <p>Next time you open a terminal, it should be a Git Bash terminal by default.</p>
+
+                  <hr class="major" />
+
+                  <h2 id="install_docker">Install Docker</h2>
 
                   <h3>Windows</h3>
 
@@ -57,6 +82,10 @@
                   <h3>Linux</h3>
 
                   <p>Follow the instructions <a href="https://docs.docker.com/engine/install/ubuntu/">here</a>.</p>
+
+                  <h3>VSCode Docker Extensions</h3>
+
+                  <p>There are some helpful extensions for using Docker within VSCode that we will make use of. To install the extensions, open VSCode and click on the &quotExtensions&quot icon <span><img src="https://raw.githubusercontent.com/microsoft/vscode-icons/master/icons/light/extensions.svg?sanitize=true"></span>. Alternatively open Extensions with <code>Ctrl-Shift-X</code> (or <code>Cmd-Shift-X</code> on Mac). Search for &quotDocker&quot and install the extensions <b>Docker</b> and <b>Docker Explorer</b> using the &quotInstall&quot button.</p>
 
                   <hr class="major" />
 
