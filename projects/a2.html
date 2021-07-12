@@ -43,43 +43,7 @@
                   <p><span class="image left"><img src="../images/potential_field.png" alt=""/></span>
                     Another way we can drive to a goal autonomously is to use <strong>potential field control</strong>. We can imagine that our goal is a magnet, pulling the robot towards it. We can treat obstacles like repelling forces, pushing the robot away. If we combine these two forces, we might get a potential field that looks like the example on the left. To get to the goal, our robot can follow the path of least resistance, moving in the direction of the strongest force at its location at each time step. Another way to say this is that our robot is following the steepest slope, or <emph>gradient</emph>, of the field. This algorithm is called <strong>gradient descent</strong>.</p>
 
-                  <p>For this project, you will write code in C++ to calculate the potential fields the robot needs to reach a goal without colliding with any obstacles. You will be given a map which tells you where the obstacles are, along with a start and goal position. One field should draw the robot towards the goal, and the other should push the robot away from the obstacles. We've made a web app which you can use to develop your code on your computer (see the <a href="#setup_instructions">setup instructions</a> below to get started. Once your algorithm is working, you can <a href="#robot_instructions">try it out on the robot!</a></p>
-
-                  <hr class="major" />
-
-                  <h2 id="setup_instructions">Setting up the code</h2>
-
-                  <h3>Prerequisites</h3>
-
-                  <p>Before you start, make sure you have followed the <a href="../tutorials/setup.html">setup instructions</a> and have installed Docker, Git and VSCode. For this assignment, you will be running your code in a Docker container. The web app will run in the same Docker container. The Docker image includes all the dependencies you need to write your code and run the app, so you only need to have Docker installed to get started.</p>
-
-                  <h3>Starting the app</h3>
-
-                  <p>First, download the <code>rob102-path-planning</code> code from <a href="https://github.com/janapavlasek/rob102-path-planning">Github</a> (<emph>Note: How to acquire code TBD</emph>). This code will be used for Project 2 and 3. Open the code in VSCode, and open a Bash terminal. First, build the docker image with the script provided:</p>
-                  <pre><code class="language-bash">./docker_build.sh</code></pre>
-
-                  <p>To run the Docker container, do:</p>
-                  <pre><code class="language-bash">./docker_run.sh</code></pre>
-
-                  <p>You should see a container called <code>rob102_planning</code> running under &quotDocker Containers&quot in VSCode's Explorer, if you have installed the Docker extensions for VSCode. When Docker is running, you should see the app, as shown below, when you navigate to <a href="http://localhost:8000">http://localhost:8000</a> in your browser.</p>
-
-                  <span class="image main"><img src="../images/webapp.png" alt="" style="max-width:600px;"/></span>
-
-                  <h3>Writing the code</h3>
-
-                  <p>You will be writing code in the <code>rob102-path-planning/path_planning</code> directory. This directory is <emph>mounted</emph> in the Docker container. When you modify the files in VSCode from your computer, those changes will be reflected in the Docker container as well.</p>
-
-                  <p>You will compile and execute your code in the Docker container. To do this, you will open a terminal inside the container. Right-click on the running docker image under &quotDocker Containers&quot in VSCode and select &quotExecute in bash.&quot This will open up a terminal which you can use to interact with the container. To compile the code, first enter into the <code>build</code> directory for this project, where we will be storing all the binaries and build files:</p>
-                  <pre><code class="language-bash">cd /code/build</code></pre>
-
-                  <p>To compile the code, we will use CMake, which will help find the dependencies and link them to our code during compilation. This is a two step process:</p>
-                  <pre><code class="language-bash">cmake ..
-make</code></pre>
-                  <p>The <code>cmake</code> command sets up our project for compilation by finding all the libraries and compilers we need. The argument <code>..</code> points to the directory one folder back from the current folder (in this case, <code>/code</code>), where the file <code>CMakeLists.txt</code> is stored. This gives CMake instructions about how to compile the code. The <code>make</code> command performs the compilation. Generally, you only have to run <code>cmake</code> once. The <code>make</code> command needs to be rerun every time you modify the code.</p>
-
-                  <p>We have provided code in <code>server.cpp</code> which communicates with the app and calls the path planning functions that you will be writing. It opens up a websocket that connects to the app. When you upload a map and send a planning goal, the server will load the map and call the planning functions for you. When the plan is found, the server will send the plan to the app to display. To run the server, in the Docker container, within the <code>build</code> directory, do:</p>
-                  <pre><code>./path_planning/path_planning_server</code></pre>
-                  <p>You should see a message when the connection is open, and the status message on the app should turn green and say &quotConnected.&quot Right now, we haven't written any code so the app won't do much. Move on to the <a href="#description">Project Description</a> section to start writing some code!</p>
+                  <p>For this project, you will write code in C++ to calculate the potential fields the robot needs to reach a goal without colliding with any obstacles. You will be given a map which tells you where the obstacles are, along with a start and goal position. One field should draw the robot towards the goal, and the other should push the robot away from the obstacles. We've made a web app which you can use to develop your code on your computer (see the <a href="../tutorials/app.html">webapp tutorial</a> to get started. Once your algorithm is working, you can <a href="#robot_instructions">try it out on the robot!</a></p>
 
                   <hr class="major" />
 
@@ -88,6 +52,10 @@ make</code></pre>
                   <p>By the end of this project, you will have implemented a distance transform, which will calculate the distance from each cell to the nearest obstacle. It should look something like this (temp image):</p>
 
                   <span class="image main"><img src="../images/dist_tf.png" alt="" style="max-width:600px;"/></span>
+
+                  <h3>Prerequisites</h3>
+
+                  <p>Before you start, make sure you have followed the <a href="../tutorials/setup.html">setup instructions</a> and gone through the <a href="../tutorials/app.html">webapp tutorial</a>. We will be compiling and executing all the code in the Docker container as described.</p>
 
                   <h3>Representing a map in code</h3>
 
@@ -185,6 +153,7 @@ make</code></pre>
                       <ul>
                         <li><a href="../tutorials/setup.html">Computer Setup</a></li>
                         <li><a href="../tutorials/git.html">Github</a></li>
+                        <li><a href="../tutorials/app.html">Using the Webapp</a></li>
                       </ul>
                     </li>
                     <li><a href="../elements.html">Elements</a></li>
