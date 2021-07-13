@@ -6,7 +6,7 @@
 -->
 <html>
   <head>
-    <title>Project 2: Potential Field Control</title>
+    <title>Project 2: Potential Field Control - ROB 102</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
@@ -95,7 +95,7 @@
     double origin_x, origin_y, meters_per_cell;
     double collision_radius;
     int8_t threshold;
-    std::vector&ltint8_t&gt cell_odds;
+    std::vector&lt;int8_t&gt; cell_odds;
 };</code></pre>
 
                   <p>The member variables <code>width</code> and <code>height</code> store the graph width and height, in cells. The variables <code>origin_x</code> and <code>origin_y</code> correspond to the global position in meters of the cell <code>(0, 0)</code>. This allows us to determine where the origin of the map is. The variable <code>meters_per_cell</code> contains the size of each cell, in meters. Finally, the <code>cell_odds</code> variable is a vector containing the odds value of each cell, as described above.</p>
@@ -105,13 +105,50 @@
                     <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>idxToCell()</code>. It should accept an array index and a graph as arguments, and return a <code>Cell</code> containing the corresponding cell coordinate for the array index.</li>
                   </ul>
 
-                  <ul class="todo">
-                    <li class="icon solid fa-laptop-code">Other graph functions can go here.</li>
-                  </ul>
+                  <p>We have provided a test script to check your indexing functions. Compile your code in the Docker container (using the <a href="../tutorials/app.html#write_code">instructions in the tutorial</a>), then run the test script in the Docker like this:</p>
+                  <pre><code class="language-bash">cd build
+./path_planning/test_graph</code></pre>
+
+                  <p>The first test (map indexing) should pass before you move on to the next step. The last test (finding neighbors) will not pass at this point. You will complete the functions for that test in <a href="a3.html">Project 3</a>.</p>
 
                   <h3>The Distance Transform</h3>
 
-                  <p>TODO.</p>
+                  <p>We will be implementing a <strong>binary distance transform</strong>, which calculates the distance from each cell to the nearest occupied cell. We will use the Euclidean distance as the distance function. We will need a function to calculate the Euclidean distance between two cells. We will also need to modify the <code>GridGraph</code> struct to include a vector called <code>obstacle_distances</code>, which will store the distance to the nearest obstacle for each cell. For occupied cells, the distance should be zero.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>cellDistance()</code>. It should accept two cell coordinates and return a <code>float</code> representing the Euclidean distance between them.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>grid_graph.h</code> file, add a <code>std::vector&lt;float&gt;</code> called <code>obstacle_distances</code> to <code>GridGraph</code>.</li>
+                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>initGraph()</code> to initialize <code>obstacle_distances</code>. You can assume the graph will be loaded when the function is called.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Initialize <code>obstacle_distances</code> so that its length is the same as the number of cells in the graph, and set all the values to a very big number (like <code>HIGH</code>, which is defined in <code>GridGraph</code>).</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> This code creates a vector of length 10 and initializes all the elements to 1.02, and assigns the result to an existing vector <code>v</code>:
+                    <pre><code class="language-cpp">v = std::vector&lt;float&gt;(10, 1.02);</code></pre></li>
+                  </ul>
+
+                  <p>The test script provides a test to check your distance function. This test should pass before moving on.</p>
+
+                  <h3>The Naive Distance Transform</h3>
+
+                  <p>We will start by implementing a distance transform with complexity <i>O(N<sup>2</sup>)</i>, where <i>N</i> is the number of cells in the graph. For each cell, calculate the distance between the current cell and every occupied cell in the graph. Store the smallest distance in the <code>obstacle_distances</code> vector. This is the naive implementation because it doesn't use any tricks to perform the transform more quickly. The complexity is <i>O(N<sup>2</sup>)</i> because the algorithm needs to loop through <i>N</i> cells for each of the <i>N</i> cells, resulting in <i>N*N = N<sup>2</sup></i> operations. You should notice that this takes a lot of time for big graphs!</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">In the <code>potential_field/distance_transform.cpp</code> file, complete function <code>naiveDistanceTransform()</code>. It should accept a graph and populate the <code>obstacle_distances</code> vector with the distance to the nearest occupied cell.</li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Use your indexing functions to convert between Cell types and indexes, and your distance function to calculate distances between cells.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Can you make your algorithm any faster?</li>
+                  </ul>
+
+                  <p>The test script includes a test to check that your distance transform is correct for the small test graph. This test should pass before you move on. However, you should make sure to test your algorithm on multiple different maps! You can use the webapp to visualize the distances as a gradient. It should look something like this:</p>
+
+                  <span class="image main"><img src="../images/dist_tf.png" alt="" style="max-width:600px;"/></span>
+
+                  <h3>The Linear Distance Transform</h3>
+
+                  <p>TODO</p>
 
                   <hr class="major" />
 
