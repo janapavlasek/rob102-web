@@ -38,6 +38,8 @@
                     <strong>Tutorial:</strong> Computer Setup
                   </header>
 
+                  <!-- GIT -->
+
                   <h2 id="install_git">Install Git</h2>
 
                   <h3>Windows</h3>
@@ -55,6 +57,8 @@
 
                   <hr class="major" />
 
+                  <!-- VSCODE -->
+
                   <h2 id="install_vscode">Install VSCode</h2>
 
                   <p>Install the Visual Studio Code IDE using the instructions for your OS <a href="https://code.visualstudio.com/download">here</a>. Note that VSCode is different from Visual Studio.</p>
@@ -69,7 +73,11 @@
 
                   <hr class="major" />
 
+                  <!-- DOCKER -->
+
                   <h2 id="install_docker">Install Docker</h2>
+
+                  <p>Docker is needed for <a href="../projects/a2.html">Project 2</a> and <a href="../projects/a3.html">Project 3</a>.</p>
 
                   <h3>Windows</h3>
 
@@ -86,6 +94,40 @@
                   <h3>VSCode Docker Extensions</h3>
 
                   <p>There are some helpful extensions for using Docker within VSCode that we will make use of. To install the extensions, open VSCode and click on the &quot;Extensions&quot; icon <span><img src="https://raw.githubusercontent.com/microsoft/vscode-icons/master/icons/light/extensions.svg?sanitize=true"></span>. Alternatively open Extensions with <code>Ctrl-Shift-X</code> (or <code>Cmd-Shift-X</code> on Mac). Search for &quot;Docker&quot; and install the extensions <b>Docker</b> and <b>Docker Explorer</b> using the &quot;Install&quot; button.</p>
+
+                  <hr class="major" />
+
+                  <!-- JULIA -->
+
+                  <h2 id="install_julia">Install Julia</h2>
+
+                  <p>Julia is needed for <a href="../projects/a4.html">Project 4</a>.</p>
+
+                  <h3>Windows</h3>
+
+                  <p>Download the 64-bit installer for the current stable release from the <a href="https://julialang.org/downloads/#current_stable_release">Julia downloads page</a>. Run the installer and follow the instructions to install Julia.</p>
+
+                  <p>To open the Julia interpreter, search for &quot;Julia&quot; and select the Julia application.</p>
+
+                  <h3>Mac</h3>
+
+                  <p>TODO</p>
+
+                  <h3>Linux</h3>
+
+                  <p>TODO</p>
+
+                  <h3>Installing package dependencies</h3>
+
+                  <p>You will need to install some packages that we will need to complete <a href="../projects/a4.html">Project 4</a>. Open the Julia interpreter and enter the following lines, one at a time:</p>
+                  <pre><code class="language-julia">using Pkg
+Pkg.add("IJulia")
+Pkg.add("Plots")
+Pkg.add("ImageView")
+Pkg.add("ImageIO")
+Pkg.add("MLDatasets")</code></pre>
+
+                  <p>It might take some time to install all the packages! You can add other packages you might want to use this way as well.</p>
 
                 </section>
 
@@ -122,6 +164,7 @@
                         <li><a href="setup.html">Computer Setup</a></li>
                         <li><a href="git.html">Github</a></li>
                         <li><a href="app.html">Using the Webapp</a></li>
+                        <li><a href="julia.html">Programming in Julia</a></li>
                       </ul>
                     </li>
                     <li><a href="../elements.html">Elements</a></li>
