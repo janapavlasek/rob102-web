@@ -115,7 +115,13 @@
 
                   <h3>Linux</h3>
 
-                  <p>TODO</p>
+                  <p>Open a terminal and navigate to the directory where you want to put Julia. Then do:</p>
+                  <pre><code class="language-bash">wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.2-linux-x86_64.tar.gz
+tar zxvf julia-1.6.2-linux-x86_64.tar.gz</code></pre>
+
+                  <p>You can launch Julia from the directory that you downloaded it in the terminal by doing <code>./bin/julia</code>. Or, to launch from any directory, do:</p>
+                  <pre><code class="language-bash">export PATH="$PATH:[/path/to/julia-1.6.2]/bin"</code></pre>
+                  <p>then run <code>julia</code>. You can add the above line to the end of the <code>.bashrc</code> file so it runs each time you open a new terminal. To quit the Julia interpreter, type <code>exit()</code>.</p>
 
                   <h3>Installing package dependencies</h3>
 
@@ -123,8 +129,8 @@
                   <pre><code class="language-julia">using Pkg
 Pkg.add("IJulia")
 Pkg.add("Plots")
-Pkg.add("ImageView")
-Pkg.add("ImageIO")
+Pkg.add("Images")
+Pkg.add("MosaicViews")
 Pkg.add("MLDatasets")</code></pre>
 
                   <p>It might take some time to install all the packages! You can add other packages you might want to use this way as well.</p>
