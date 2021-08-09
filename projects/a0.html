@@ -72,16 +72,79 @@
 
                   <p>We have provided a script to start a Docker container. We will be using the <code>gcc</code> Docker image which is based on Linux and includes everything we need to compile C++ code. Open a terminal in VSCode by selecting &quot;Terminal&quot; &gt; &quot;New Terminal&quot;. It should open a Bash terminal at the bottom of the screen, in the folder where your code is stored. In the terminal, type:</p>
                   <pre><code class="language-bash">./docker_run</code></pre>
-                  <p>The container will start and the terminal will now be in open in the container.</p>
+                  <p>A container called <code>rob102-cpp-intro</code> will start and the terminal will now be in open in the container. Your VSCode environment should look something like this:</p>
+
+                  <span class="image main"><img src="../images/p0/vscode-env.png" alt=""/></span>
+
+                  <p>The directory <code>src</code> is <em>mounted</em> in the Docker container. Essentially, this means that the folder <code>/code/src/</code> in the Docker container mirrors the folder <code>intro-cpp/src/</code> on your computer. When you edit the files in VSCode, those changes will be reflected in the Docker container. This means you can write your code normally in VSCode, and compile and run it in the container, without having to restart it or copy over your code.</p>
+
+                  <h3>Stopping the Docker container</h3>
+
+                  <p>You can close the terminal within the container at anytime by typing <code>exit</code> in the terminal. Since the terminal is the only process running in the Docker container, this will stop and remove the container.</p>
+
+                  <p>Another way to stop the container is using the Docker containers tab which comes with the Docker Explorer VSCode extension. Right-click on the running container and select &quot;Stop&quot;:</p>
+
+                  <span class="image main"><img src="../images/p0/docker-stop.png" alt="" style="max-width:400px;"/></span>
 
                   <hr class="major" />
 
                   <h2>Project Description</h2>
-                  <p>TODO</p>
+
+                  <p>This project will introduce programming concepts in C++. The goal of the following activities is to prepare you to implement algorithms in C++. All the code will be compiled and executed in a Docker container. We will be using the command line to compile and run code for this assignment and for the rest of the projects.</p>
 
                   <h3>Part 0: Hello World!</h3>
 
-                  <p>TODO</p>
+                  <p>In this part, you will get familiar with the structure of a C++ program and learn how to compile and execute code.</p>
+
+                  <p>Before we run a program written in C++, we need to <em>compile</em> it using a C++ compiler. The compiler will turn the source code into machine code. It will create an <em>executable</em> which will execute the code in the <code>main</code> function. A compiler called <code>g++</code> is already installed in the Docker container. To use it, first use the <code>cd</code> command (short for &quot;change directory&quot;) to navigate to the folder where the code is stored. Remember that the <code>src</code> folder of the Git repository is mounted in the container. Try running these commands in the terminal:</p>
+                  <pre><code class="language-bash">cd /code/src/
+ls</code></pre>
+                  <p>If the argument to <code>cd</code> starts with a slash, the argument refers to an <em>absolute path</em>. Otherwise, it refers to a path <em>relative</em> to the current working directory. The command <code>ls</code> is short for &quot;list&quot;. It lists all the files and directories in the current directory (<code>ls /my/dir/</code> would list everything in the directory <code>/my/dir/</code>). If you run the <code>ls</code> command in the <code>/code/src/</code> directory, you should see all the same folders which are under <code>intro-cpp/src/</code> in VSCode, one for each part.</p>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> The command <code>cd /my/dir/</code> changes the working directory to whatever path is passed as an argument, in this case, <code>/my/dir/</code>. If the path starts with a slash, it refers to an absolute path, otherwise, it is relative to the current working directory. The slash at the end of the path is optional.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> The path passed to <code>cd</code> must be a valid path! Otherwise, you'll get an error. Try it now: In the terminal, type:
+                    <pre><code class="language-bash">cd not/a/real/path/</code></pre>
+                    You'll see the error &quot;No such file or directory.&quot; This is because you tried to change directories into a path that does not exist!</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> The command <code>ls</code> prints all the files and directories in the current directory. Passing it a directory as an argument will list what's in that directory instead.</li>
+                  </ul>
+
+                  <p>Now, change directories to <code>q0_hello_world</code>. If you're current directory is <code>src</code>, run:</p>
+                  <pre><code class="language-bash">cd q0_hello_world/</code></pre>
+
+                  <p>If you are not in the <code>src</code> folder, substitute the appropriate path. Next, compile the code in <code>hello_world.cpp</code>:</p>
+                  <pre><code class="language-bash">g++ hello_world.cpp -o hello_world</code></pre>
+                  <p>The compiler should run and no errors should print out. Type <code>ls</code>. You should see a new executable file called <code>hello_world</code> in the folder. This is the executable created by the compiler. Run it with:</p>
+                  <pre><code class="language-bash">./hello_world</code></pre>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs">
+                      <strong>Hint:</strong> To compile C++ code, use the following command:
+                      <pre><code class="language-bash">g++ [my_program].cpp -o [executable_name]</code></pre>
+                      Substitute <code>[my_program].cpp</code> with the name of the C++ file to compile, and <code>[executable_name]</code> with what the executable should be called.
+                    </li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You can run any executable file, like the ones generated by a compiler, like this:
+                    <pre><code class="language-bash">./[executable_name]</code></pre>
+                    Substitute <code>[executable_name]</code> with the name of the executable.</li>
+                  </ul>
+
+                  <p>When you run your program, nothing happens! That's because we haven't written any code yet. In VSCode, navigate to the file <code>src/q0_hello_world/hello_world.cpp</code>. The main function looks like this:</p>
+                  <pre><code class="language-cpp">int main(int argc, char** argv)
+{
+    // TODO: Print out the message "Hello World! My name is __".
+    return 0;
+}</code></pre>
+                  <p>Right now, the code just returns a zero, which means success. Let's print a message. On a new line under the comment and above the return statement, add this line:</p>
+                  <pre><code class="language-cpp">std::cout << "Hello World!\n";</code></pre>
+                  <p>Compile and run the program again, with the same commands as above. Now it should print out &quot;Hello World!&quot; Congratulations! You've written your first C++ code. Now, modify the message to print out &quot;Hello World! My name is [YOUR NAME].&quot; Replace &quot;[YOUR NAME]&quot; with your name.</p>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Every time you make a change to your code, it must be recompiled for the change to be reflected in the executable.</li>
+                  </ul>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code"><strong>0.0.1:</strong> Complete the code in the file <code>hello_world.cpp</code> so that it prints the message &quot;Hello World! My name is [YOUR NAME].&quot;</li>
+                  </ul>
 
                   <h3>Part 1: Variables &amp; Operators</h3>
 
