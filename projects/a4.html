@@ -11,8 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/stackoverflow-light.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/julia.min.js"></script>
   </head>
   <body class="is-preload">
 
@@ -46,9 +49,18 @@
 
                   <p>CIFAR-10 has 50,000 images to train a classification algorithm, each labelled with one of the classes shown above. In addition, there are 10,000 images which are used for testing the accuracy of the algorithm. We will implement three machine learning algorithms to classify images: <a href="#nearest_neighbor">nearest neighbors</a>, <a href="#linear_classifier">linear classification</a>, and a <a href="#neural_net">neural network</a>.</p>
 
-                  <p>This project is implemented using the programming language <a href="https://julialang.org/">Julia</a>. Before you start, make sure you have followed the <a href="setup.html#install_julia">Julia install instructions</a> to install Julia locally on your computer.</p>
+                  <p>This project is implemented using the programming language <a href="https://julialang.org/">Julia</a>. Before you start, make sure you have followed the <a href="setup.html#install_julia">Julia install instructions</a> to install Julia locally on your computer. The following topics are covered on this page:</p>
 
-                  <h2>Getting the code</h2>
+                  <ul>
+                    <li><a href="#getting_code">Getting the code</a></li>
+                    <li><a href="#run_jupyter">Launching a Jupyter Notebook</a></li>
+                    <li><a href="#proj_desc">Project description</a></li>
+                    <li><a href="#tasks">Task Summary</a></li>
+                  </ul>
+
+                  <hr class="major" />
+
+                  <h2 id="getting_code">Getting the code</h2>
 
                   <p>You will create a Git repository to store your code based off the provided template, as in previous projects. Navigate to the template code <a href="https://github.com/rob102-staff/machine-learning">here</a> and create a repository using the template. Remember to <b>make sure it is set to private</b>. Storing your assignment solutions in a public repository is a violation of the honor code. Give Prof. Jenkins and Jana access to your code using their usernames, <code>ohseejay</code> and <code>janapavlasek</code>. Finally, clone your new repository on your computer, substituting the address to your repo:</p>
                   <pre><code class="language-bash">git clone &lt;ADDRESS&gt;</code></code></pre>
@@ -56,7 +68,7 @@
 
                   <hr class="major" />
 
-                  <h2>Launching a Jupyter Notebook</h2>
+                  <h2 id="run_jupyter">Launching a Jupyter Notebook</h2>
 
                   <p>We will use <em>Jupyter notebooks</em> to write code in Julia quickly and easily visualize outputs. To launch a Jupyter notebook which uses Julia, open a Julia interpreter and enter the following commands:</p>
                   <pre><code class="language-julia">using IJulia
@@ -69,40 +81,76 @@ notebook()</code></pre>
 
                   <hr class="major" />
 
-                  <h2 id="nearest_neighbor">Part I: Nearest Neighbors</h2>
+                  <h2 id="proj_desc">Project Description</h2>
 
-                  <p>In Part I of this project, you will implement a Nearest Neighbor classifier. The nearest neighbor algorithm takes a test image and finds the <em>closest</em> train image, which we call the image's nearest neighbor. Then, it assigns the test image the same label as its nearest neighbor. Here is an example of some CIFAR-10 images and their nearest neighbors:</p>
+                  <p>In this project, you will develop three algorithms for image classification on the CIFAR-10 dataset:</p>
+                    <ul>
+                      <li><a href="#nearest_neighbor">Part 1: Nearest Neighbors</a></li>
+                      <li><a href="#linear_classifier">Part 2: Linear Classifier</a></li>
+                      <li><a href="#neural_net">Part 3: Neural Network</a></li>
+                    </ul>
 
-                  <span class="image main"><img src="../images/p4/nearest_neighbor.png" alt="" style="max-width:600px;"/></span>
 
-                  <h3>Notebook setup</h3>
+                  <h3 id="nearest_neighbor">Part 1: Nearest Neighbors</h3>
 
-                  <p>Open the notebook <code>nearest_neighbors.ipynb</code> by double-clicking it in the web browser. The notebook is made up of <em>cells</em>, which can be text cells (in Markdown) or code cells (in Julia). You can run a cell by selecting the cell and pressing &nbsp;<i class="fas fa-play"></i>&nbsp;<b>Run</b>.</p>
+                    <p>In Part 1 of this project, you will implement a Nearest Neighbor classifier. The nearest neighbor algorithm takes a test image and finds the <em>closest</em> train image, which we call the image's nearest neighbor. Then, it assigns the test image the same label as its nearest neighbor. Here is an example of some CIFAR-10 images and their nearest neighbors:</p>
 
-                  <span class="image main"><img src="../images/p4/run_cell.png" alt=""/></span>
+                    <span class="image main"><img src="../images/p4/nearest_neighbor.png" alt="" style="max-width:600px;"/></span>
 
-                  <p>You need to run a cell before you use anything it defines in another cell. For example, you should always run the imports cell when you start the notebook. Similarly, you must run a cell which defines a variable or function before running a cell that uses it. Start by running the import cell at the top of the notebook <code>nearest_neighbors.ipynb</code> to import some dependencies we'll need later on.</p>
+                    <h4>Notebook setup</h4>
 
-                  <h3>Loading the data</h3>
+                    <p>Open the notebook <code>nearest_neighbors.ipynb</code> by double-clicking it in the web browser. The notebook is made up of <em>cells</em>, which can be text cells (in Markdown) or code cells (in Julia). You can run a cell by selecting the cell and pressing &nbsp;<i class="fas fa-play"></i>&nbsp;<b>Run</b>.</p>
 
-                  <p>The second cell in the notebook loads the CIFAR-10 data, provided by the &quot;MLDatasets&quot; Julia library. Run this cell now. The first time you load the data, you'll see a message like this:</p>
+                    <span class="image main"><img src="../images/p4/run_cell.png" alt=""/></span>
 
-                  <span class="image main"><img src="../images/p4/download_cifar.png" alt="" style="max-width:800px;"/></span>
+                    <p>You need to run a cell before you use anything it defines in another cell. For example, you should always run the imports cell when you start the notebook. Similarly, you must run a cell which defines a variable or function before running a cell that uses it. Start by running the import cell at the top of the notebook <code>nearest_neighbors.ipynb</code> to import some dependencies we'll need later on.</p>
 
-                  <p>Type <code>y</code> into the box that appears at the top and press enter to download the data in
-                  the default directory. It will take a few minutes for the data to download.</p>
+                    <h4>The CIFAR-10 data</h4>
+
+                    <p>The second cell in the notebook loads the CIFAR-10 data, provided by the &quot;MLDatasets&quot; Julia library. Run this cell now. The first time you load the data, you'll see a message like this:</p>
+
+                    <span class="image main"><img src="../images/p4/download_cifar.png" alt="" style="max-width:800px;"/></span>
+
+                    <p>Type <code>y</code> into the box that appears at the top and press enter to download the data in
+                    the default directory. It will take a few minutes for the data to download.</p>
+
+                    <p>Let's take a look at how the image data is represented. This code loads the CIFAR-10 data:</p>
+                    <pre><code class="language-julia">x_train, y_train = CIFAR10.traindata(Float32, train_idx)
+x_test,  y_test  = CIFAR10.testdata(Float32, test_idx)</code></pre>
+
+                    <p>
+                      The variable <code>x_train</code> holds the training images, and <code>x_test</code> holds the testing images. Each image has size <code>(32,&nbsp;32,&nbsp;3)</code>. There are <code>N_train</code> training images, and <code>N_test</code> testing images, so the variables <code>x_train</code> and <code>x_test</code> are size <code>(N_train,&nbsp;32,&nbsp;32,&nbsp;3)</code> and <code>(N_test,&nbsp;32,&nbsp;32,&nbsp;3)</code> respectively. Each pixel value is a float between 0 and 1.
+                      The variables <code>y_train</code> and <code>y_test</code> contain integers corresponding to the labels for each of the images. For example, the label 1 corresponds to &quot;airplane&quot;, 2 corresponds to &quot;automobile&quot;, etc. <code>y_train</code> and <code>y_test</code> are vectors of length <code>N_train</code> and <code>N_test</code> respectively.
+                    </p>
+
+                    <h4>Computing distance between images</h4>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_1_1">4.1.1:</strong> Complete the function <code>compute_distance()</code> so that it returns the distance between two flattened images.
+                      </li>
+                    </ul>
+
+                  <h3 id="linear_classifier">Part 2: Linear Classifier</h3>
+
+                    <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+
+
+                  <h3 id="neural_net">Part 3: Neural Network</h3>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+                    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
 
                   <hr class="major" />
 
-                  <h2 id="linear_classifier">Linear Classification</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <h2 id="tasks">Task Summary</h2>
 
-                  <hr class="major" />
-
-                  <h2 id="neural_net">Neural Network</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todo4_1_1">4.1.1</a>:</strong> Complete the function <code>compute_distance()</code> so that it returns the distance between two flattened images.
+                      </li>
+                    </ul>
 
                 </section>
 
