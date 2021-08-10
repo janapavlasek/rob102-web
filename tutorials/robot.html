@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<!--
+  Editorial by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>MBot-Omni Tutorial - ROB 102</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+  </head>
+  <body class="is-preload">
+
+    <!-- Wrapper -->
+      <div id="wrapper">
+
+        <!-- Main -->
+          <div id="main">
+            <div class="inner">
+
+              <!-- Header -->
+                <header id="header">
+                  <a href="../index.html" class="logo"><strong>ROB 102:</strong> Introduction to AI and Programming</a>
+                  <ul class="icons">
+                    <li><a href="#" class="icon brands fa-slack"><span class="label">Slack</span></a></li>
+                    <li><a href="#" class="icon brands fa-github"><span class="label">Github</span></a></li>
+                  </ul>
+                </header>
+
+              <!-- Content -->
+                <section>
+                  <header class="main project">
+                    <strong>Tutorial:</strong> MBot-Omni
+                  </header>
+
+                  <h2>Prerequisites</h2>
+
+                  <p>This tutorial assumes you have followed the instructions for installing <a href="setup.html#install_git">Git</a> and <a href="setup.html#install_vscode">VSCode</a>.</p>
+
+                  <h2>1. Add the Remote Development extension</h2>
+
+                  <p>First, we need the VSCode Remote Development extension, which will allow us to connect VSCode to the robot's environment. Open VSCode and click on the &quot;Extensions&quot; icon <span><img src="https://raw.githubusercontent.com/microsoft/vscode-icons/master/icons/light/extensions.svg?sanitize=true"></span> in the toolbar on the left. Search for &quot;Remote Development&quot; and select the extension called &quot;Remote Development.&quot; Click &quot;Install&quot; to install it.</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/install-remote-ext.jpg" alt="" style="max-width:800px;"/></span>
+
+                  <h2>2. Add the Beaglebone as a remote host</h2>
+
+                  <p>Now we will tell VSCode how to connect to the Beaglebone board on the robot. First, power on the robot and connect to the Wifi network <b>OMNI-BBB-XXXX</b>, replacing &quot;XXXX&quot; with the ID of your robot. The ID should be written on a label on the robot. The password for the network is <b>iloverobots</b>. It might take a few seconds for the network to appear. The Beaglebone is on if the green and red battery indicator is lit up and if the blue LEDs by the power button are flashing.</p>
+
+                  <p>To add the Beaglebone as a remote host in VSCode, click on the &quot;Remote Explorer&quot; in the toolbar on the left. Then, select the + to add a new host:</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-add-target.png" alt="" style="max-width:400px;"/></span>
+
+                  <p>In the box that appears, type in <code>ssh</code> followed by the robot's address, exactly as below (all robots have the same address and username):</p>
+                  <pre><code class="language-bash">ssh debian@192.168.6.2</code></pre>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-ssh-command.png" alt="" style="max-width:600px;"/></span>
+
+                  <p>Press Enter, then select the default configuration file when the option appears:</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-ssh-config.png" alt="" style="max-width:600px;"/></span>
+
+                  <h2>3. Connect to the Beaglebone</h2>
+
+                  <p>To connect to the Beaglebone, open the &quot;Remote Explorer&quot; tab again, and select the new remote host you just added. Click on the icon to the right of the address to connect to the host in a new window.</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-connect-host.png" alt="" style="max-width:400px;"/></span>
+
+                  <p>If you are already in a new VSCode window with no other files open, you can also right-click on the host address to connect in the current window. You will be asked to select a platform. Select &quot;Linux&quot;.</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-platform-linux.png" alt="" style="max-width:600px;"/></span>
+
+                  <p>You will be asked for the password to the Beaglebone. <em>This is different from the wifi password.</em> The password is <b>i&lt;3robots!</b>. The first time you connect, it will take a few minutes for VSCode to do some setup on the Beaglebone. You should see the address of the Beaglebone on the bottom left of the VSCode window.</p>
+
+                  <h2>4. Testing the motors</h2>
+
+                  <p>Let's make sure everything is working correctly! In the VSCode window which is connected to the robot, open a terminal by clicking on &quot;Terminal&quot; &gt; &quot;New Terminal.&quot; A terminal will open in the Beaglebone.</p>
+
+                  <span class="image main"><img src="../images/tutorials/robot/remote-connect-vsc.png" alt="" style="max-width:800px;"/></span>
+
+                  <p>Now, we can send commands to the motors (tip: set the robot on a box or hold it in your hands so the wheels aren't touching the ground, or it will drive away!). In the terminal, type:</p>
+                  <pre><code class="language-bash">rc_test_motors -m 1 -d 0.5</code></pre>
+                  <p>This sends a <em>duty</em> of 0.5 to motor 1. Press Ctrl+C to stop the motor. You can try sending any duty, from -1 to 1, to the motor. You can also try controlling motors 2 and 3 instead.</p>
+
+                </section>
+
+            </div>
+          </div>
+
+        <!-- Sidebar -->
+          <div id="sidebar">
+            <div class="inner">
+
+              <!-- Menu -->
+                <nav id="menu">
+                  <header class="major">
+                    <h2>Menu</h2>
+                  </header>
+                  <ul>
+                    <li><a href="../index.html">Home</a></li>
+                    <li>
+                      <span class="opener">Course Information</span>
+                      <ul>
+                        <li><a href="../index.html#sec_syllabus">Syllabus</a></li>
+                        <li><a href="../index.html#sec_schedule">Schedule</a></li>
+                        <li><a href="../index.html#sec_course_staff">Course Staff</a></li>
+                        <li><a href="../index.html#sec_policies">Course Policies</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span class="opener">Projects</span>
+                      <ul>
+                        <li><a href="../projects/a0.html">Project 0: Intro to C++</a></li>
+                        <li><a href="../projects/a1.html">Project 1: Wall Following</a></li>
+                        <li><a href="../projects/a2.html">Project 2: Potential Field Control</a></li>
+                        <li><a href="../projects/a3.html">Project 3: Path Planning</a></li>
+                        <li><a href="../projects/a4.html">Project 4: Machine Learning</a></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span class="opener active">Tutorials</span>
+                      <ul>
+                        <li><a href="setup.html">Computer Setup</a></li>
+                        <li><a href="git.html">Github</a></li>
+                        <li><a href="robot.html">Using the MBot-Omni</a></li>
+                        <li><a href="app.html">Using the Webapp</a></li>
+                        <li><a href="julia.html">Programming in Julia</a></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </nav>
+
+              <!-- Section -->
+                <section>
+                  <header class="major">
+                    <h2>Course Times</h2>
+                  </header>
+                  <p>Lectures, labs and office hours.</p>
+                  <ul class="contact">
+                    <li class="icon solid fa-chalkboard-teacher">MW 10-11:30 AM @ GFL 107</li>
+                    <li class="icon solid fa-vials">F 12-2 PM (002) @ FRB 1060 <br/>F 2-4 PM (003)  @ FRB 1060</li>
+                    <li class="icon solid fa-users">TuTh 1-2 PM</li>
+                  </ul>
+                </section>
+
+              <!-- Footer -->
+                <footer id="footer">
+                  <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+                </footer>
+
+            </div>
+          </div>
+
+      </div>
+
+    <!-- Scripts -->
+      <script src="../assets/js/jquery.min.js"></script>
+      <script src="../assets/js/browser.min.js"></script>
+      <script src="../assets/js/breakpoints.min.js"></script>
+      <script src="../assets/js/util.js"></script>
+      <script src="../assets/js/main.js"></script>
+      <script>hljs.highlightAll();</script>
+
+  </body>
+</html>
