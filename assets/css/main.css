@@ -199,12 +199,15 @@ blockquote {
 
 code {
   background: rgba(230, 235, 237, 0.25);
-  border-radius: 0.375em;
+  border-radius: 0.2em;
   border: solid 1px rgba(210, 215, 217, 0.75);
   font-family: "Courier New", monospace;
-  font-size: 0.9em;
-  margin: 0 0.25em;
-  padding: 0.25em 0.65em; }
+  font-size: 0.85em;
+  margin: 0 0.2em;
+  padding: 0.2em 0.4em;
+  position: relative;
+  top: -0.088em;
+}
 
 pre {
   -webkit-overflow-scrolling: touch;
@@ -1452,6 +1455,9 @@ ul.todo {
         top: 0; }
     ul.todo li a {
       color: inherit; }
+    ul.todo li pre {
+        margin: 0.5em 0;
+      }
 
 /* HINT */
 ul.hint {
@@ -1497,6 +1503,9 @@ ul.hint {
         top: 0; }
     ul.hint li a {
       color: inherit; }
+    ul.hint li pre {
+      margin: 0.5em 0;
+    }
 
 /* Pagination */
 ul.pagination {
