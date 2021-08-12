@@ -40,22 +40,44 @@
                     <strong>Tutorial:</strong> Computer Setup
                   </header>
 
+                  <p>This page contains instructions for installing software needed for ROB 102. For Projects 0, 1, 2 and 3, you will need Git, VSCode, and Docker. For Project 4, you will need Julia.</p>
+
+                  <ul>
+                    <li><a href="#install_git">Git</a></li>
+                    <li><a href="#install_vscode">VSCode</a></li>
+                    <li><a href="#install_docker">Docker</a></li>
+                    <li><a href="#install_julia">Julia</a></li>
+                  </ul>
+
+                  <hr class="major" />
+
                   <!-- GIT -->
 
-                  <h2 id="install_git">Install Git</h2>
+                  <h2 id="install_git">Git</h2>
 
-                  <h3>Windows</h3>
+                  <p>This section guides you through the installation and setup procedure for Git. We will use GitHub to manage our code. If you do not have a Github account, go to <a href="https://github.com/">github.com</a> and create one.</p>
 
-                  <p>We will use Git Bash to interface with Github on Windows. We will also use Git Bash as our terminal when we are developing code. Install Git and Git Bash from <a href="https://git-scm.com/downloads" target="_blank">here</a>.</p>
+                  <h3>Installing Git</h3>
 
-                  <h3>Mac</h3>
+                    <h4>Windows</h4>
 
-                  <p>Open a command prompt and type <code>git --version</code> on the command line. The version will print if Git is installed. If Git is not installed, you will be prompted to install it. Follow the instructions to do so.</p>
+                    <p>We will use Git Bash to interface with Github on Windows. We will also use Git Bash as our terminal when we are developing code. Install Git and Git Bash from <a href="https://git-scm.com/downloads" target="_blank">here</a>.</p>
 
-                  <h3>Linux</h3>
+                    <h4>Mac</h4>
 
-                  <p>Check if Git is installed by opening a command prompt and typing <code>git --version</code> on the command line. The version will print if Git is installed. If you get a message saying the command <code>git</code> does not exist, install as follows:</p>
-                  <pre><code class="language-bash">sudo apt install git-all</code></pre>
+                    <p>Open a command prompt and type <code>git --version</code> on the command line. The version will print if Git is installed. If Git is not installed, you will be prompted to install it. Follow the instructions to do so.</p>
+
+                    <h4>Linux</h4>
+
+                    <p>Check if Git is installed by opening a command prompt and typing <code>git --version</code> on the command line. The version will print if Git is installed. If you get a message saying the command <code>git</code> does not exist, install as follows:</p>
+                    <pre><code class="language-bash">sudo apt install git-all</code></pre>
+
+                  <h3>Configuring Git</h3>
+
+                  <p>Once Git is installed, you should configure it with your name and email. This will help identify you as the author of code you commit. This only has to be done once. <i>You should only do this on your own computer, not a shared computer.</i> To set your name and email, open a terminal and enter the following two commands, substituting your name and email:</p>
+                  <pre><code class="language-bash">git config --global user.name "Your Name"
+git config --global user.email your@email.com</code></pre>
+                  <p>Use the email associated with your GitHub account.</p>
 
                   <hr class="major" />
 
@@ -77,21 +99,23 @@
 
                   <!-- DOCKER -->
 
-                  <h2 id="install_docker">Install Docker</h2>
+                  <h2 id="install_docker">Docker</h2>
 
                   <p>Docker is needed for <a href="../projects/a0.html">Project 0</a>, <a href="../projects/a2.html">Project 2</a>, and <a href="../projects/a3.html">Project 3</a>.</p>
 
-                  <h3>Windows</h3>
+                  <h3>Installing Docker</h3>
 
-                  <p>Download Docker for Windows and follow the installation instructions <a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/" target="_blank">here</a>. Run the executable (choose the default options when asked). When the installation completes, you will be prompted to restart your computer. Press the <b>Close &amp; Restart</b> button to do so. You will have to restart your computer. You'll be prompted to install Windows Subsystem for Linux (WSL) with the instructions <a href="https://docs.microsoft.com/en-ca/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package" target="_blank">here</a> (only need to do step 4).</p>
+                    <h4>Windows</h4>
 
-                  <h3>Mac</h3>
+                    <p>Download Docker for Windows and follow the installation instructions <a href="https://hub.docker.com/editions/community/docker-ce-desktop-windows/" target="_blank">here</a>. Run the executable (choose the default options when asked). When the installation completes, you will be prompted to restart your computer. Press the <b>Close &amp; Restart</b> button to do so. You will have to restart your computer. You'll be prompted to install Windows Subsystem for Linux (WSL) with the instructions <a href="https://docs.microsoft.com/en-ca/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package" target="_blank">here</a> (only need to do step 4).</p>
 
-                  <p>Follow the instructions <a href="https://docs.docker.com/docker-for-mac/install/" target="_blank">here</a>.</p>
+                    <h4>Mac</h4>
 
-                  <h3>Linux</h3>
+                    <p>Follow the instructions <a href="https://docs.docker.com/docker-for-mac/install/" target="_blank">here</a>.</p>
 
-                  <p>Follow the instructions <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">here</a>.</p>
+                    <h4>Linux</h4>
+
+                    <p>Follow the instructions <a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank">here</a>.</p>
 
                   <h3>VSCode Docker Extensions</h3>
 
@@ -101,29 +125,31 @@
 
                   <!-- JULIA -->
 
-                  <h2 id="install_julia">Install Julia</h2>
+                  <h2 id="install_julia">Julia</h2>
 
                   <p>Julia is needed for <a href="../projects/a4.html">Project 4</a>.</p>
 
-                  <h3>Windows</h3>
+                  <h3>Installing Julia</h3>
 
-                  <p>Download the 64-bit installer for the current stable release from the <a href="https://julialang.org/downloads/#current_stable_release" target="_blank">Julia downloads page</a>. Run the installer and follow the instructions to install Julia.</p>
+                    <h4>Windows</h4>
 
-                  <p>To open the Julia interpreter, search for &quot;Julia&quot; and select the Julia application.</p>
+                    <p>Download the 64-bit installer for the current stable release from the <a href="https://julialang.org/downloads/#current_stable_release" target="_blank">Julia downloads page</a>. Run the installer and follow the instructions to install Julia.</p>
 
-                  <h3>Mac</h3>
+                    <p>To open the Julia interpreter, search for &quot;Julia&quot; and select the Julia application.</p>
 
-                  <p>TODO</p>
+                    <h4>Mac</h4>
 
-                  <h3>Linux</h3>
+                    <p>TODO</p>
 
-                  <p>Open a terminal and navigate to the directory where you want to put Julia. Then do:</p>
-                  <pre><code class="language-bash">wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.2-linux-x86_64.tar.gz
-tar zxvf julia-1.6.2-linux-x86_64.tar.gz</code></pre>
+                    <h4>Linux</h4>
 
-                  <p>You can launch Julia from the directory that you downloaded it in the terminal by doing <code>./bin/julia</code>. Or, to launch from any directory, do:</p>
-                  <pre><code class="language-bash">export PATH="$PATH:[/path/to/julia-1.6.2]/bin"</code></pre>
-                  <p>then run <code>julia</code>. You can add the above line to the end of the <code>.bashrc</code> file so it runs each time you open a new terminal. To quit the Julia interpreter, type <code>exit()</code>.</p>
+                    <p>Open a terminal and navigate to the directory where you want to put Julia. Then do:</p>
+                    <pre><code class="language-bash">wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.2-linux-x86_64.tar.gz
+  tar zxvf julia-1.6.2-linux-x86_64.tar.gz</code></pre>
+
+                    <p>You can launch Julia from the directory that you downloaded it in the terminal by doing <code>./bin/julia</code>. Or, to launch from any directory, do:</p>
+                    <pre><code class="language-bash">export PATH="$PATH:[/path/to/julia-1.6.2]/bin"</code></pre>
+                    <p>then run <code>julia</code>. You can add the above line to the end of the <code>.bashrc</code> file so it runs each time you open a new terminal. To quit the Julia interpreter, type <code>exit()</code>.</p>
 
                   <h3>Installing package dependencies</h3>
 
