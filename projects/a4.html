@@ -247,9 +247,53 @@ label = y_train[i]</code></pre>
 
                   <h3 id="linear_classifier">Part 2: Linear Classifier</h3>
 
-                    <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                    <p>Let's see if we can do a bit better at classifying images by <em>learning</em> the parameters for a linear function.</p>
 
+                    <h4>Forward Pass</h4>
+
+                    <p>Given a set of weights, the <em>forward pass</em> of the classifier should return the scores for each class, for a given image.</p>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_2_1">4.2.1:</strong> Complete the function <code>linear_forward()</code> so that it returns the class score for each image.
+                      </li>
+                    </ul>
+
+                    <h4>Backward Pass</h4>
+
+                    <p>The gradient computation is given. You will implement the hinge loss.</p>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_2_2">4.2.2:</strong> Complete the function <code>svm_loss()</code> to calculate the hinge loss given the class scores.
+                      </li>
+                    </ul>
+
+                    <h4>Training the network</h4>
+
+                    <p>Now, we will use the functions we developed to train a linear classifier.</p>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_2_3">4.2.3:</strong> Complete the function <code>train_svm()</code> to train the linear classifier.
+                      </li>
+                    </ul>
+
+                    <h4>Testing the network</h4>
+
+                    <p>Once we have found a set of weights, we can use them to test our algorithm. Code has been provided to test the accuracy of the network.</p>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_2_4">4.2.4:</strong> Complete the function <code>test_svm()</code> to use the forward pass function to predict a label for each image.
+                      </li>
+                    </ul>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo4_2_5">4.2.5:</strong> Tune the learning rate and the regularization constant. See how high you can get your accuracy.
+                      </li>
+                    </ul>
 
                   <h3 id="neural_net">Part 3: Neural Network</h3>
 
@@ -259,6 +303,8 @@ label = y_train[i]</code></pre>
                   <hr class="major" />
 
                   <h2 id="tasks">Task Summary</h2>
+
+                  <h3>Part 1: Nearest Neighbors</h3>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
@@ -281,16 +327,38 @@ label = y_train[i]</code></pre>
                       </li>
                     </ul>
 
-                    <hr class="major" />
-
-                    <h2 id="adv_ext">Advanced Extensions</h2>
+                    <h3>Part 2: Linear Classifier</h3>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
-                        <strong><a href="#todoAE_4i">Advanced Extension 4.i</a></strong> Implement the k-nearest neighbors algorithm.
+                        <strong><a href="#todo4_2_1">4.2.1</a>:</strong> Complete the function <code>linear_forward()</code> so that it returns the class score for each image.
                       </li>
                       <li class="icon solid fa-laptop-code">
-                        <strong><a href="#todoAE_4ii">Advanced Extension 4.ii</a></strong> Experiment with different values of \(k\).
+                        <strong><a href="#todo4_2_2">4.2.2</a>:</strong> Complete the function <code>svm_loss()</code> to calculate the hinge loss given the class scores.
+                      </li>
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todo4_2_3">4.2.3</a>:</strong> Complete the function <code>train_svm()</code> to train the linear classifier.
+                      </li>
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todo4_2_4">4.2.4</a>:</strong> Complete the function <code>test_svm()</code> to use the forward pass function to predict a label for each image.
+                      </li>
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todo4_2_5">4.2.5</a>:</strong> Tune the learning rate and the regularization constant. See how high you can get your accuracy.
+                      </li>
+                    </ul>
+
+                    <h3>Part 3: Neural Network</h3>
+
+                  <hr class="major" />
+
+                  <h2 id="adv_ext">Advanced Extensions</h2>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todoAE_4i">Advanced Extension 4.i</a>:</strong> Implement the k-nearest neighbors algorithm.
+                      </li>
+                      <li class="icon solid fa-laptop-code">
+                        <strong><a href="#todoAE_4ii">Advanced Extension 4.ii</a>:</strong> Experiment with different values of \(k\).
                       </li>
                     </ul>
 
