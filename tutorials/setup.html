@@ -13,8 +13,9 @@
     <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
 
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/languages/julia.min.js"></script>
   </head>
   <body class="is-preload">
 
@@ -135,28 +136,49 @@ git config --global user.email your@email.com</code></pre>
 
                     <p>Download the 64-bit installer for the current stable release from the <a href="https://julialang.org/downloads/#current_stable_release" target="_blank">Julia downloads page</a>. Run the installer and follow the instructions to install Julia.</p>
 
+                    <span class="image main"><img src="../images/setup/julia_win/julia_install.png" alt="" style="max-width:800px;"/></span>
+
+                    <p>Select the install executable and follow the instructions. You can select the default install location and options. On the page about additional tasks, you can choose whether you want to add a destop icon and start menu entry. It might be helpful to add Julia to your <code>PATH</code> variable at this step (optional):</p>
+
+                    <span class="image main"><img src="../images/setup/julia_win/julia_tasks.png" alt="" style="max-width:500px;"/></span>
+
+                    <p>When the installation is complete, you should see a window that looks like the one below. You can now exit out of the installer.</p>
+
+                    <span class="image main"><img src="../images/setup/julia_win/julia_success.png" alt="" style="max-width:500px;"/></span>
+
                     <p>To open the Julia interpreter, search for &quot;Julia&quot; and select the Julia application.</p>
+
+                    <span class="image main"><img src="../images/setup/julia_win/search_julia.png" alt="" style="max-width:700px;"/></span>
+
+                    <p>When you launch Julia, you should see an interpreter like this one:</p>
+
+                    <span class="image main"><img src="../images/setup/julia_win/julia_interpreter.png" alt="" style="max-width:800px;"/></span>
 
                     <h4>Mac</h4>
 
-                    <p>Go to <a href="https://julialang.org/downloads/">Julia downloads page</a>. Click the download next to macOS</p>
+                    <p>Go to <a href="https://julialang.org/downloads/" target="_blank">Julia downloads page</a>. Click the download next to macOS:</p>
                     <span class="image main"><img src="../images/setup/download_page.png" alt="" style="max-width:800px;"/></span>
-                    <p>Find the downloaded .dmg file </p>
+
+                    <p>Find the downloaded .dmg file:</p>
                     <span class="image main"><img src="../images/setup/downloaded_dmg.png" alt="" style="max-width:800px;"/></span>
-                    <p>Double click the downloaded file in your Finder</p>
-                    <span class="image main"><img src="../images/setup/found_download.png" alt="" style="max-width:800px;"/></span>
-                    <p>Click and drag the Julia logo into your Applications folder</p>
-                    <span class="image main"><img src="../images/setup/drag_app.png" alt="" style="max-width:800px;"/></span>
-                    <p>Find the Julia application in your Launchpad</p>
-                    <span class="image main"><img src="../images/setup/applications.png" alt="" style="max-width:800px;"/></span>
+
+                    <p>Double click the downloaded file in your Finder:</p>
+                    <span class="image main"><img src="../images/setup/found_download.png" alt="" style="max-width:400px;"/></span>
+
+                    <p>Click and drag the Julia logo into your Applications folder:</p>
+                    <span class="image main"><img src="../images/setup/drag_app.png" alt="" style="max-width:500px;"/></span>
+
+                    <p>Find the Julia application in your Launchpad:</p>
+                    <span class="image main"><img src="../images/setup/applications.png" alt="" style="max-width:500px;"/></span>
+
                     <p>This will open the Julia interpreter. You may have to give your computer permission to use Julia, or give Julia permission to use your terminal. </p>
-                    <span class="image main"><img src="../images/setup/julia.png" alt="" style="max-width:800px;"/></span>
+                    <span class="image main"><img src="../images/setup/julia.png" alt="" style="max-width:600px;"/></span>
 
                     <h4>Linux</h4>
 
                     <p>Open a terminal and navigate to the directory where you want to put Julia. Then do:</p>
                     <pre><code class="language-bash">wget https://julialang-s3.julialang.org/bin/linux/x64/1.6/julia-1.6.2-linux-x86_64.tar.gz
-  tar zxvf julia-1.6.2-linux-x86_64.tar.gz</code></pre>
+tar zxvf julia-1.6.2-linux-x86_64.tar.gz</code></pre>
 
                     <p>You can launch Julia from the directory that you downloaded it in the terminal by doing <code>./bin/julia</code>. Or, to launch from any directory, do:</p>
                     <pre><code class="language-bash">export PATH="$PATH:[/path/to/julia-1.6.2]/bin"</code></pre>
