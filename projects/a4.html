@@ -128,6 +128,13 @@ notebook()</code></pre>
                       <li><a href="#neural_net">Part 3: Neural Network</a></li>
                     </ul>
 
+                    <p>Use the following link to accept the assignment in Github Classrooms:</p>
+                    <ul class="link-box">
+                      <li class="icon solid fa-link">
+                        <strong>Accept the assignment:</strong>
+                        <a href="https://classroom.github.com/a/njQD6RaC" target="_blank">https://classroom.github.com/a/njQD6RaC</a>
+                      </li>
+                    </ul>
 
                   <h3 id="nearest_neighbor">Part 1: Nearest Neighbors</h3>
 
@@ -280,11 +287,17 @@ label = y_train[i]</code></pre>
 
                   <h3 id="linear_classifier">Part 2: Linear Classifiers</h3>
 
-                    <p>Let's see if we can do a bit better at classifying images by <em>learning</em> the parameters for a linear function.</p>
+                    <p>Let's see if we can do a bit better at classifying images by <em>learning</em> the parameters for a linear function. This assignment will walk you through implementing a linear classification algorithm for the CIFAR-10 dataset. We will try to find a set of weights so that the following linear relation gives a vector containing a score for each image class:</p>
+
+                    <p>$$
+                      f(X) = X \times W
+                    $$</p>
+
+                    <p>\(X\) is a vector of image features, \(W\) is a matrix containing the weights to learn, and \(f(X)\) is the vector of class scores. During test time, we will label an image with the class with the highest score. In this section, you will complete the notebook <code>linear_classifier.ipnyb</code>.</p>
 
                     <h4>Forward Pass</h4>
 
-                    <p>Given a set of weights, the <em>forward pass</em> of the classifier should return the scores for each class, for a given image.</p>
+                    <p>The <em>forward pass</em> provides the scores for each class for a given image, using a given set of weights. The forward pass is used at testing time to get the scores used to perform classification. It is also used at training time, to compute the loss for the current best set of weights. In the provided notebook cell, implement the forward pass of a linear classifier now.</p>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
@@ -294,17 +307,26 @@ label = y_train[i]</code></pre>
 
                     <h4>Backward Pass</h4>
 
-                    <p>The gradient computation is given. You will implement the hinge loss.</p>
+                    <p>The <em>backward pass</em> calculates the loss and gradients for a batch of images, given the correct labels for those images and a set of weights. In the notebook, the gradient computation is given. You will implement the support vector machine (SVM) loss computation.</p>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
-                        <strong id="todo4_2_2">4.2.2:</strong> Complete the function <code>svm_loss()</code> to calculate the hinge loss given the class scores.
+                        <strong id="todo4_2_2">4.2.2:</strong> Complete the function <code>svm_loss()</code> to calculate the support vector machine (SVM) loss given the class scores.
+                      </li>
+                    </ul>
+
+                    <ul class="hint">
+                      <li class="icon solid fa-cogs">
+                        <strong>Hint:</strong> You should use <code>linear_forward()</code> to get the scores needed to compute the loss.
+                      </li>
+                      <li class="icon solid fa-cogs">
+                        <strong>Hint:</strong> Don't forget the regularization loss!
                       </li>
                     </ul>
 
                     <h4>Training the network</h4>
 
-                    <p>Now, we will use the functions we developed to train a linear classifier.</p>
+                    <p>Now, we will use the functions we developed to train a linear classifier. Implement a training loop in the provided function which first samples a random batch of images, uses <code>svm_loss()</code> to calculate the loss and gradients, then updates the weight matrix. Loop for the given number of iterations. The number of iterations, learning rate, batch size, and regularization coefficient are given (see the function documentation for details).</p>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
@@ -314,7 +336,7 @@ label = y_train[i]</code></pre>
 
                     <h4>Testing the network</h4>
 
-                    <p>Once we have found a set of weights, we can use them to test our algorithm. Code has been provided to test the accuracy of the network.</p>
+                    <p>Once we have found a set of weights, we can use them to test our algorithm. Code has been provided to test the accuracy of the network. You need to write the test loop that returns class labels for each test image, using the weights found in training.</p>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
@@ -322,16 +344,29 @@ label = y_train[i]</code></pre>
                       </li>
                     </ul>
 
+                    <ul class="hint">
+                      <li class="icon solid fa-cogs">
+                        <strong>Hint:</strong> The <code>linear_forward()</code> function might come in handy again.
+                      </li>
+                    </ul>
+
+                    <p>We're done! But, you might notice that the learning rate and regularization coefficient have an impact on how good the network does. Try tuning them, and report on how they affect the performance of the classifier and which values work best.</p>
+
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
-                        <strong id="todo4_2_5">4.2.5:</strong> Tune the learning rate and the regularization constant. See how high you can get your accuracy.
+                        <strong id="todo4_2_5">4.2.5:</strong> Tune the learning rate and the regularization coefficient. See how high you can get your accuracy. Report on your observations.
+                      </li>
+                    </ul>
+
+                    <ul class="hint">
+                      <li class="icon solid fa-cogs">
+                        <strong>Hint:</strong> You might consider implementing cross validation to tune these parameters, as discussed in lecture.
                       </li>
                     </ul>
 
                   <h3 id="neural_net">Part 3: Neural Network</h3>
 
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                    <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                    <p>Coming soon!</p>
 
                   <hr class="major" />
 
@@ -375,7 +410,7 @@ label = y_train[i]</code></pre>
                         <strong><a href="#todo4_2_1">4.2.1</a>:</strong> Complete the function <code>linear_forward()</code> so that it returns the class score for each image.
                       </li>
                       <li class="icon solid fa-laptop-code">
-                        <strong><a href="#todo4_2_2">4.2.2</a>:</strong> Complete the function <code>svm_loss()</code> to calculate the hinge loss given the class scores.
+                        <strong><a href="#todo4_2_2">4.2.2</a>:</strong> Complete the function <code>svm_loss()</code> to calculate the SVM loss given the class scores.
                       </li>
                       <li class="icon solid fa-laptop-code">
                         <strong><a href="#todo4_2_3">4.2.3</a>:</strong> Complete the function <code>train_svm()</code> to train the linear classifier.
@@ -384,7 +419,7 @@ label = y_train[i]</code></pre>
                         <strong><a href="#todo4_2_4">4.2.4</a>:</strong> Complete the function <code>test_svm()</code> to use the forward pass function to predict a label for each image.
                       </li>
                       <li class="icon solid fa-laptop-code">
-                        <strong><a href="#todo4_2_5">4.2.5</a>:</strong> Tune the learning rate and the regularization constant. See how high you can get your accuracy.
+                        <strong><a href="#todo4_2_5">4.2.5</a>:</strong> Tune the learning rate and the regularization coefficient and report your observations.
                       </li>
                     </ul>
 
