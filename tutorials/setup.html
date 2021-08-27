@@ -62,7 +62,32 @@
 
                     <h4>Windows</h4>
 
-                    <p>We will use Git Bash to interface with Github on Windows. We will also use Git Bash as our terminal when we are developing code. Install Git and Git Bash from <a href="https://git-scm.com/downloads" target="_blank">here</a>.</p>
+                    <p>We will use Git Bash to interface with Github on Windows. We will also use Git Bash as our terminal when we are developing code.
+                    </p>
+
+                    <ol>
+                      <li><strong>Download Git:</strong>
+                        Download Git and Git Bash from <a href="https://git-scm.com/downloads" target="_blank">here</a> and click on the &quot;Windows&quot; option:
+                        <span class="image main"><img src="../images/setup/git/win/git_win_download.png" alt="" style="max-width:500px;"/></span>
+                      </li>
+                      <li><strong>Install Git:</strong>
+                        Once the download finishes, click on the installer to run it. When you are asked whether to allow the application to make changes to your computer, select &quot;Yes.&quot;
+                      </li>
+                      <li><strong>Configuring install options:</strong>
+                        The Git installer asks you to select many options during installation. In general, you can accept the default options by clicking &quot;Continue&quot; without changing the default values. We recommend changing only three of them: <br/><br/>
+
+                        The default editor, Vim, is difficult to use. Change this to &quot;Nano&quot;:
+                        <span class="image main"><img src="../images/setup/git/win/git_editor.jpg" alt="" style="max-width:500px;"/></span><br/>
+
+                        We recommend setting the default branch name to &quot;main&quot;:
+                        <span class="image main"><img src="../images/setup/git/win/git_main_branch.jpg" alt="" style="max-width:500px;"/></span><br/>
+
+                        Select the option to checkout line-endings as-is and commit with Unix style:
+                        <span class="image main"><img src="../images/setup/git/win/git_line_endings.jpg" alt="" style="max-width:500px;"/></span><br/>
+                      </li>
+                      </li>
+                      <li>Once the installer finishes successfully, move to the <a href="#sec_config_git">configuration step</a>.</li>
+                    </ol>
 
                     <h4>Mac</h4>
 
@@ -73,7 +98,7 @@
                     <p>Check if Git is installed by opening a command prompt and typing <code>git --version</code> on the command line. The version will print if Git is installed. If you get a message saying the command <code>git</code> does not exist, install as follows:</p>
                     <pre><code class="language-bash">sudo apt install git-all</code></pre>
 
-                  <h3>Configuring Git</h3>
+                  <h3 id="sec_config_git">Configuring Git</h3>
 
                   <p>Once Git is installed, you should configure it with your name and email. This will help identify you as the author of code you commit. This only has to be done once. <i>You should only do this on your own computer, not a shared computer.</i> To set your name and email, open a terminal and enter the following two commands, substituting your name and email:</p>
                   <pre><code class="language-bash">git config --global user.name "Your Name"
@@ -192,7 +217,9 @@ Pkg.add("IJulia")
 Pkg.add("Plots")
 Pkg.add("Images")
 Pkg.add("MosaicViews")
-Pkg.add("MLDatasets")</code></pre>
+Pkg.add("MLDatasets")
+Pkg.add("CSV")
+Pkg.add(Pkg.PackageSpec(name="DataFrames", version="0.21.0"))</code></pre>
 
                   <p>It might take some time to install all the packages! You can add other packages you might want to use this way as well.</p>
 
