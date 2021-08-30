@@ -107,7 +107,24 @@
 
                     <h4 id="sec_git_mac">MacOS</h4>
 
-                    <p>Open a command prompt and type <code>git --version</code> on the command line. The version will print if Git is installed. If Git is not installed, you will be prompted to install it. Follow the instructions to do so.</p>
+                    <ol>
+                      <li><strong>Check if Git is installed:</strong>
+                        Sometimes, Git is already installed on MacOS. To check if this is the case, open a terminal by using the Launchpad to search for &quot;Terminal&quot;:
+                        <span class="image main"><img src="../images/setup/git/mac/open_terminal.png" alt="" style="max-width:300px;"/></span>
+                        In the terminal, type:
+                        <pre><code class="language-bash">git --version</code></pre>
+                        If a version prints out, you're done! Go to the instructions on <a href="#sec_config_git">configuring Git</a>. Otherwise, move on to the next step.
+                      </li>
+                      <li><strong>Install Git:</strong>
+                        If Git is not installed, you will be prompted to install developer tools. Click &quot;Install&quot;, then accept the license agreement and wait for the software to install.
+                        <span class="image main"><img src="../images/setup/git/mac/install-git.png" alt="" style="max-width:500px;"/></span>
+                      </li>
+                      <li><strong>Check Git is installed:</strong>
+                        Now, in a terminal, when you type <code>git --version</code>, version information should print out:
+                        <span class="image main"><img src="../images/setup/git/mac/git-success.png" alt="" style="max-width:500px;"/></span>
+                      </li>
+                      <li>Configure Git using the <a href="#sec_config_git">configuration instructions</a>.</li>
+                    </ol>
 
                     <h4 id="sec_git_linus">Linux</h4>
 
