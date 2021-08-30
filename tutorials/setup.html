@@ -41,7 +41,7 @@
                     <strong>Tutorial:</strong> Computer Setup
                   </header>
 
-                  <p>This page contains instructions for installing software needed for ROB 102. The setup for Projects 0 to 3 is different than for Project 4.For Projects 0 to 3, you will need Git, VSCode, and Docker. For Project 4, you will need Julia.</p>
+                  <p>This page contains instructions for installing software needed for ROB 102. The setup for Projects 0 to 3 is different than for Project 4. For Projects 0 to 3, you will need Git, VSCode, and Docker. For Project 4, you will need Julia.</p>
 
                   <p><strong>For Projects 0 to 3, follow the setup instructions below:</strong> (they should be completed in order)</p>
 
@@ -172,13 +172,28 @@ git config --global user.email your@email.com</code></pre>
                       In ROB 102, we will be covering how to use the command line in a Bash terminal. By default, Windows uses its own command prompt. You will set your default terminal in VSCode to Git Bash. In VSCode, open the command pallette by pressing <code>F1</code> (or <code>Ctrl-Shift-P</code>). Search for the option &quot;Terminal: Select Default Profile&quot;:
                       <span class="image main"><img src="../images/setup/vscode/win/terminal-cmd.png" alt="" style="max-width:800px;"/></span>
                       Select the option &quot;Git Bash&quot;:
-                      <span class="image main"><img src="../images/setup/terminal-select.png" alt="" style="max-width:800px;"/></span>
+                      <span class="image main"><img src="../images/setup/vscode/win/terminal-select.png" alt="" style="max-width:800px;"/></span>
                       Next time you open a terminal, it should be a Git Bash terminal by default.
                     </li>
                   </ol>
 
                   <h4 id="sec_vscode_mac">MacOS</h4>
+
+                  <ol>
+                    <li><strong>Download VSCode:</strong> Download the installer for VSCode for Mac from the <a href="https://code.visualstudio.com/download" target="_blank">Visual Studio website</a>:
+                      <span class="image main"><img src="../images/setup/vscode/mac/download_mac.png" alt="" style="max-width:500px;"/></span>
+                    </li>
+                    <li><strong>Add VSCode to applications:</strong> When the installer finishes downloading, find the download using your Finder (look for it in Downloads):
+                      <span class="image main"><img src="../images/setup/vscode/mac/find-vscode.png" alt="" style="max-width:500px;"/></span>
+                    </li>
+                    <li><strong>Open VSCode:</strong> Open VSCode by searching for &quot;Visual Studio Code&quot; in the launchpad:
+                      <span class="image main"><img src="../images/setup/vscode/mac/launchpad.png" alt="" style="max-width:300px;"/></span>
+                    </li>
+                  </ol>
+
                   <h4 id="sec_vscode_linux">Linux</h4>
+
+                  <p>Download the installer for VSCode for Linux from the <a href="https://code.visualstudio.com/download" target="_blank">Visual Studio website</a> and follow the instructions to install.</p>
 
                   <h3 id="sec_vscode_config">Configuring VSCode</h3>
 
@@ -246,7 +261,35 @@ git config --global user.email your@email.com</code></pre>
 
                     <h4>Mac</h4>
 
-                    <p>Follow the instructions <a href="https://docs.docker.com/docker-for-mac/install/" target="_blank">here</a>.</p>
+                    <ol>
+                      <li><strong>Check your chip type:</strong>
+                        If you don't already know whether you have an Intel or an Apple chip, you can find the information by typing &quot;System Information&quot; in your Finder. The chip type will be listed under hardware information:
+                        <span class="image main"><img src="../images/setup/docker/mac/system_information.png" alt="" style="max-width:500px;"/></span>
+                      </li>
+                      <li><strong>Download Docker:</strong>
+                        Download the correct version of Docker for your chip type from the <a href="https://docs.docker.com/docker-for-mac/install/" target="_blank">Docker website</a>.
+                        <span class="image main"><img src="../images/setup/docker/mac/download.png" alt="" style="max-width:800px;"/></span>
+                      </li>
+                      <li><strong>Install Docker:</strong>
+                        Once the download is completed, find the downloaded file, &quot;Docker.dmg&quot;, and double click it to run it:
+                        <span class="image main"><img src="../images/setup/docker/mac/click-download.png" alt="" style="max-width:300px;"/></span>
+                      </li>
+                      <li><strong>Add Docker to applications:</strong>
+                        Once the install is completed, a window will open which prompts you to drag Docker to your applications. Do so in the window:
+                        <span class="image main"><img src="../images/setup/docker/mac/drag-drop.png" alt="" style="max-width:400px;"/></span>
+                      </li>
+                      <li><strong>Run Docker:</strong>
+                        Run Docker by searching for it in the Launchpad. You will need to accept to run it and provide it with priveledged access. Enter your password when prompted.
+                        <span class="image main"><img src="../images/setup/docker/mac/launchpad.png" alt="" style="max-width:300px;"/></span>
+                      </li>
+                      <li><strong>Test Docker:</strong>
+                        When Docker is running, open a terminal and type:
+                        <pre><code class="language-bash">docker run hello-world</code></pre>
+                        Docker should download the Docker image for the container <code>hello-world</code> and run it. It does nothing, so it will shutdown once a message like this one has been printed:
+                        <span class="image main"><img src="../images/setup/docker/mac/docker-hello-world.png" alt="" style="max-width:500px;"/></span>
+                      </li>
+                      <li><strong>Install Docker extensions for VSCode:</strong> Follow the <a href="#sec_docker_ext">instructions to install VSCode extensions for Docker</a>.</li>
+                    </ol>
 
                     <h4>Linux</h4>
 
