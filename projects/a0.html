@@ -40,36 +40,59 @@
                     <strong>Project 0:</strong> Introduction to Programming in C++
                   </header>
 
-                  <p>Before you start, make sure you have followed the <a href="setup.html">Setup Instructions</a>. You will need to have VSCode, Docker and Git installed (if using Windows, you will also need Git Bash) in order to complete this project. The following topics are covered on this page:</p>
+                  <p>Before you start, make sure you have followed the <a href="setup.html">Setup Instructions</a>. You will need to have VSCode, Docker and Git installed in order to complete this project. The following topics are covered on this page:</p>
 
                   <ul>
                     <li><a href="#getting_code">Getting the code</a></li>
                     <li><a href="#run_docker">Running a Docker container</a></li>
-                    <li><a href="#proj_desc">Project description</a></li>
+                    <li><a href="#proj_desc">Project description</a>
+                      <ul>
+                        <li><a href="#proj_desc_hello_world">Hello World!</a></li>
+                        <li><a href="#proj_desc_calc">Pocket Calculator</a></li>
+                      </ul>
+                    </li>
                     <li><a href="#tasks">Task Summary</a></li>
                   </ul>
 
                   <h2 id="getting_code">Getting the code</h2>
 
-                  <p>We will use Github to manage our code. A Github tutorial is available <a href="../tutorials/git.html">here</a>.</p>
+                  <p>We will use GitHub Classroom to manage assignments. Use the following invite link to accept the assignment on the Github Classroom:</p>
 
-                  <p>The code you write for each project will be stored in a repository on your own Github account. If you do not have a Github account, go to <a href="https://github.com/">github.com</a> and create one. To create repositories for your code, we will use <em>Github Templates</em>. Navigate to the <a href="https://github.com/rob102-staff/intro-cpp">template code for Project 0</a>. Click on the green <b>Use this template</b> button:</p>
+                  <ul class="link-box">
+                    <li class="icon solid fa-link">
+                      <strong>Accept the assignment:</strong>
+                      <a href="https://classroom.github.com/a/EXM5NKBh" target="_blank">https://classroom.github.com/a/EXM5NKBh</a>
+                    </li>
+                  </ul>
 
-                  <span class="image main"><img src="../images/p0/use-template.png" alt="" style="max-width:800px;"/></span>
+                  <p>You will see a page that looks like this (make sure you are signed in to your account on <a href="https://github.com">github.com</a>):</p>
 
-                  <p>You will see a screen like the one below. Pick a name for your repository, and <b>make sure it is set to private</b>. Storing your assignment solutions in a public repository is a violation of the honor code. You can leave the option to include all branches unchecked.</p>
+                  <span class="image main"><img src="../images/p0/accept_assign.png" alt="" style="max-width:600px;"/></span>
 
-                  <span class="image main"><img src="../images/p0/git-create-project.png" alt="" style="max-width:800px;"/></span>
+                  <p>Click <b>Accept this assignment</b>. You will see a page like this, telling you the repository is being created:</p>
 
-                  <p>Next, you will give the instructors access to your code. In your new repository, go to &quot;Settings&quot; &gt; &quot;Manage Access&quot; and click &quot;Invite a collaborator&quot;. Add Prof. Jenkins and Jana using their usernames, <code>ohseejay</code> and <code>janapavlasek</code>.</p>
+                  <span class="image main"><img src="../images/p0/git_assign_wait.png" alt="" style="max-width:600px;"/></span>
 
-                  <span class="image main"><img src="../images/p0/git-collab.png" alt="" style="max-width:800px;"/></span>
+                  <p>Wait a few seconds, then click refresh. You should see a link to your repository. Note that you can also find your repository by going to the <a href="https://github.com/orgs/robotics102/repositories">repositories page on the ROB 102 GitHub</a> and looking for a repository named <code>p0-intro-cpp-[your-user]</code> (with your username instead of <code>[your-user]</code>).</p>
 
-                  <p>Finally, we're ready to clone the repository! Open a terminal (on Mac, click the Launchpad, search for &quot;Terminal&quot; and select the terminal program. On Windows, open Git Bash). Use the <code>cd</code> command to navigate to the folder where you would like to keep your code. Clone your repo using:</p>
+                  <span class="image main"><img src="../images/p0/git-assign-ready.png" alt="" style="max-width:600px;"/></span>
+
+                  <p>Click the link to navigate to your repository on GitHub. You should see a repository with the template code, which looks something like this:</p>
+
+                  <span class="image main"><img src="../images/p0/git-repo.png" alt="" style="max-width:800px;"/></span>
+
+                  <h3>Cloning the Repository</h3>
+
+                  <p>You will now clone the repository you just created onto your computer. On the repository page, click on the green button that says &quot;Code&quot; and select the clipboard icon to copy the link to the repository:</p>
+                  <span class="image main"><img src="../images/p0/git-get-link.png" alt="" style="max-width:600px;"/></span>
+
+                  <p>Open a terminal (in Windows, open Git Bash). Navigate to the folder where you want to store the code for this course with the command <code>cd</code>. For example, you might create a folder called &quot;rob102-code&quot;. Make sure to take note of where you are storing the code so you can find it later! After this folder is created, in the terminal, type:</p>
+                  <pre><code>cd Documents/rob102-code</code></pre>
+                  <p>You will now be in a terminal inside the folder you just created. Now, in the same terminal, type the following command to clone your repository:</p>
                   <pre><code class="language-bash">git clone &lt;ADDRESS&gt;</code></code></pre>
-                  <p>Substitute the address to your repo, which you can copy using the clipboard button.</p>
+                  <p>Substitute the address to your repository, which you just copied. If you type <code>ls</code> into your terminal, you will see the folder containing the code you just downloaded.</p>
 
-                  <span class="image main"><img src="../images/p0/git-clone.png" alt="" style="max-width:800px;"/></span>
+                  <span class="image main"><img src="../images/p0/git-clone.png" alt="" style="max-width:600px;"/></span>
 
                   <p>Once you have the code on your computer, open VSCode and select &quot;File&quot; &gt; &quot;Open Folder...&quot; and navigate to where you stored your code. Select the folder and click &quot;Select Folder&quot;. Now you should see all the files in VSCode in the file explorer on the left. You can click on any file to view and edit it.</p>
 
@@ -101,16 +124,13 @@
 
                     <p>This project will introduce programming concepts in C++. The goal of the following activities is to prepare you to implement algorithms in C++. All the code will be compiled and executed in a Docker container. We will be using the command line to compile and run code for this assignment and for the rest of the projects.</p>
 
-                    <p>This project is divided into 5 parts:</p>
+                    <p>This project is divided into 2 parts:</p>
                     <ul>
-                      <li><a href="#proj_desc_0">Part 0: Hello World</a></li>
-                      <li><a href="#proj_desc_1">Part 1: Variables &amp; Operators</a></li>
-                      <li><a href="#proj_desc_2">Part 2: Logic &amp; Control Flow</a></li>
-                      <li><a href="#proj_desc_3">Part 3: Functions</a></li>
-                      <li><a href="#proj_desc_4">Part 4: Vectors &amp; Structs</a></li>
+                      <li><a href="#proj_desc_hello_world">Hello World!</a></li>
+                      <li><a href="#proj_desc_calc">Pocket Calculator</a></li>
                     </ul>
 
-                  <h3 id="proj_desc_0">Part 0: Hello World!</h3>
+                  <h3 id="proj_desc_hello_world">Hello World!</h3>
 
                     <p>In this part, you will get familiar with the structure of a C++ program and learn how to compile and execute code.</p>
 
@@ -127,8 +147,8 @@ ls</code></pre>
                       <li class="icon solid fa-cogs"><strong>Hint:</strong> The command <code>ls</code> prints all the files and directories in the current directory. Passing it a directory as an argument will list what's in that directory instead.</li>
                     </ul>
 
-                    <p>Now, change directories to <code>q0_hello_world</code>. If you're current directory is <code>src</code>, run:</p>
-                    <pre><code class="language-bash">cd q0_hello_world/</code></pre>
+                    <p>Now, change directories to <code>hello_world</code>. If you're current directory is <code>src</code>, run:</p>
+                    <pre><code class="language-bash">cd hello_world/</code></pre>
 
                     <p>If you are not in the <code>src</code> folder, substitute the appropriate path. Next, compile the code in <code>hello_world.cpp</code>:</p>
                     <pre><code class="language-bash">g++ hello_world.cpp -o hello_world</code></pre>
@@ -153,7 +173,7 @@ ls</code></pre>
     return 0;
 }</code></pre>
                     <p>Right now, the code just returns a zero, which means success. Let's print a message. On a new line under the comment and above the return statement, add this line:</p>
-                    <pre><code class="language-cpp">std::cout << "Hello World!\n";</code></pre>
+                    <pre><code class="language-cpp">std::cout &lt;&lt; "Hello World!\n";</code></pre>
                     <p>Compile and run the program again, with the same commands as above. Now it should print out &quot;Hello World!&quot; Congratulations! You've written your first C++ code. Now, modify the message to print out &quot;Hello World! My name is [YOUR NAME].&quot; Replace &quot;[YOUR NAME]&quot; with your name.</p>
 
                     <ul class="hint">
@@ -162,32 +182,24 @@ ls</code></pre>
 
                     <ul class="todo">
                       <li class="icon solid fa-laptop-code">
-                        <strong id="todo0_0_1">0.0.1:</strong> Complete the code in the file <code>hello_world.cpp</code> so that it prints the message &quot;Hello World! My name is [YOUR NAME].&quot;
+                        <strong id="todo0_1">0.1:</strong> Complete the code in the file <code>hello_world.cpp</code> so that it prints the message &quot;Hello World! My name is [YOUR NAME].&quot;
                       </li>
                     </ul>
 
-                  <h3 id="proj_desc_1">Part 1: Variables &amp; Operators</h3>
+                  <h3 id="proj_desc_calc">Programming a Pocket Calculator</h3>
 
-                    <p>TODO</p>
-
-                  <h3 id="proj_desc_2">Part 2: Logic &amp; Control Flow</h3>
-
-                    <p>TODO</p>
-
-                  <h3 id="proj_desc_3">Part 3: Functions</h3>
-
-                    <p>TODO</p>
-
-                  <h3 id="proj_desc_4">Part 4: Vectors &amp; Structs</h3>
-
-                    <p>TODO</p>
+                    <p>During lecture, we will go through how to program a pocket calculator in C++. You should implement the calculator in the provided template file, which you can find in <code>src/pocket_calc/pocket_calc.cpp</code>. To compile and run it, we will do the same thing as in the Hello World exercise. In the terminal in the Docker container, do:</p>
+                    <pre><code class="language-bash">cd /code/src/hello_world/
+g++ pocket_calc.cpp -o pocket_calc
+./pocket_calc</code></pre>
+                    <p>Remember to recompile the code every time you make a change. We will implement this program in multiple steps. A list of each step to complete will be available on this page.</p>
 
                   <hr class="major" />
 
                   <h2 id="tasks">Task Summary</h2>
 
                     <ul class="todo">
-                      <li class="icon solid fa-laptop-code"><strong><a href="#todo0_0_1">0.0.1</a>:</strong> Print the message &quot;Hello World! My name is [YOUR NAME].&quot;</li>
+                      <li class="icon solid fa-laptop-code"><strong><a href="#todo0_1">0.1</a>:</strong> Print the message &quot;Hello World! My name is [YOUR NAME].&quot;</li>
                     </ul>
 
                 </section>
