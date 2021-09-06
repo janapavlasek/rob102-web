@@ -82,6 +82,10 @@ html {
 *, *:before, *:after {
   box-sizing: inherit; }
 
+section > .content {
+  display: inline-block;
+}
+
 body {
   background: #ffffff; }
   body.is-preload *, body.is-preload *:before, body.is-preload *:after, body.is-resizing *, body.is-resizing *:before, body.is-resizing *:after {
