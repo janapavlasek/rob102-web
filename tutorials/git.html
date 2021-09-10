@@ -13,7 +13,7 @@
     <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
 
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
   </head>
   <body class="is-preload">
@@ -40,30 +40,112 @@
                     <strong>Tutorial:</strong> Github
                   </header>
 
-                  <span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+                  <p>
+                    This is a brief guide to the most important GitHub commands for getting started with Git and using appropriately for course projects.
+                    For those of you looking for more resources or a different perspective, links to external references are provided in <a href="#sec_further_reading">Further Reading</a>.
+                  </p>
 
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <p>This tutorial assumes that you have Git installed on your computer. Installation instructions can be found in the <a href="setup.html#install_git">computer setup tutorial.</a></p>
 
-                  <hr class="major" />
+                  <p>For a step-by-step guide to installing and using Git, designed to get you started on <a href="../projects/a0.html">Project 0</a>, see the <a href="../labs/lab1_coding_workflow.pdf">Lab 1 slides</a>.</p>
 
-                  <h2>Interdum sed dapibus</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <ul>
+                    <li><a href="#sec_git">How Git Works</a></li>
+                    <li><a href="#sec_cmds">The Basic Git Commands</a>
+                      <ul>
+                        <li><a href="#sec_info">The status of a repository</a></li>
+                        <li><a href="#sec_push">Pushing changes</a></li>
+                        <li><a href="#sec_pull">Pulling changes</a></li>
+                        <li><a href="#sec_tag">Tagging commits</a></li>
+                        <li><a href="#sec_branch">Branching</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#sec_cheat_sheet">Git Cheat Sheet</a></li>
+                    <li><a href="#sec_best_prac">Git Best Practices</a></li>
+                    <li><a href="#sec_further_reading">Further Reading</a></li>
+                  </ul>
+                </section>
 
-                  <hr class="major" />
+                <section id="sec_git">
+                  <header class="major">
+                    <h2><a href="#sec_git">How Git Works</a></h2>
+                  </header>
 
-                  <h2>Magna etiam veroeros</h2>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
-                  <p>Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+                  <span class="image main"><img src="../images/tutorials/git/git_workflow.png" alt="" style="max-width:1000px;"/></span>
 
-                  <hr class="major" />
+                  <p>Git is a program for software version control. GitHub is a website which hosts repositories and provides features like pull requests and managing repository settings. We will be using GitHub in ROB 102. Other websites like GitLab and BitBucket also use Git to interact with repositories, and provide similar features to GitHub in the browser.</p>
 
-                  <h2>Lorem aliquam bibendum</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+                </section>
 
+                <section id="sec_cmds">
+                  <header class="major">
+                    <h2><a href="#sec_cmds">The Basic Git Commands</a></h2>
+                  </header>
+
+                  <p>We will be using the command line to interact with GitHub. The commands covered on this page should be typed in a terminal. On Windows, use Git Bash as the terminal. On Mac or Linux, use the built in terminal.</p>
+
+                  <p>All these Git commands, with the exception of <code>git clone</code>, must be executed from inside a valid GitHub repository. In other words, the terminal's working directory should be the GitHub repository. To check the current working directory of your terminal, type <code>pwd</code>. To change directories, use the <code>cd</code> command.</p>
+
+                  <h3 id="sec_info">The status of a repository</h3>
+
+                  <p>The <code>status</code> command is one of the most useful commands.</p>
+
+                  <h3 id="sec_push">Pushing changes</h3>
+
+                  <p>To push changes there are three major steps: <code>add</code>, <code>commit</code>, and <code>push</code>.</p>
+
+                  <ol>
+                    <li>
+                      <strong>Staging the files:</strong> First, you must tell Git <em>which files</em> you would like to push to Git. In a terminal inside a repository, type:
+                      <pre><code class="language-bash">git add [PATH_TO_FILE]</code></pre>
+                      Replace <code>[PATH_TO_FILE]</code> with the path to the file you want to stage. You can list multiple files in a row. The command:
+                      <pre><code class="language-bash">git add .</code></pre>
+                      adds ALL the modified files for staging. <em>Be careful with this one!</em> Make sure you use <code>git status</code> to make sure you know which files you are adding and you don't add a change you don't want by mistake.
+                    </li>
+                    <li>
+                      <strong>Committing the files:</strong> In this stage, we commit all the changes to the <em>local</em> repository. All staged files will be part of the commit. In the terminal, type:
+                      <pre><code class="language-bash">git commit -m &quot;Make change X to add feature Y&quot;</code></pre>
+                      Replace the text between the quotation marks to
+                    </li>
+                    <li>
+                      <strong>Pushing the commit:</strong> The commit we just made is to the <em>local</em> repository. We need to <em>push</em> the changes to the remote repository. In the terminal, type:
+                      <pre><code class="language-bash">git push</code></pre>
+                      Now you should see your changes on GitHub.
+                    </li>
+                  </ol>
+
+                  <h3 id="sec_pull">Pulling changes</h3>
+
+                  <h3 id="sec_tag">Tagging commits</h3>
+
+                  <h3 id="sec_branch">Branching</h3>
+
+                </section>
+
+                <section id="sec_cheat_sheet">
+                  <header class="major">
+                    <h2><a href="#sec_cheat_sheet">Git Cheat Sheet</a></h2>
+                  </header>
+
+                </section>
+
+                <section id="sec_best_prac">
+                  <header class="major">
+                    <h2><a href="#sec_best_prac">Git Best Practices</a></h2>
+                  </header>
+
+                </section>
+
+                <section id="sec_further_reading">
+                  <header class="major">
+                    <h2><a href="#sec_further_reading">Further Reading</a></h2>
+                  </header>
+
+                  <p>
+                    <a href="http://www.git-scm.com/book/en/v2">The Pro Git book</a> provides an in-depth description of git and version control.
+                    As different people often learn through different styles, the <a href="http://www-cs-students.stanford.edu/~blynn/gitmagic/">Git Magic</a> tutorial has also proved quite useful when a different perspective is needed.
+                    <a href="http://rogerdudler.github.io/git-guide/">git: the simple guide</a> has often been an accessible quick start resource.
+                  </p>
                 </section>
 
             </div>
