@@ -283,6 +283,21 @@ make</code></pre>
 
                   <h3 id="sec_p_control">Advanced Extension: Wall Following (P-Control)</h3>
 
+                  <p>We can make a smoother controller using <em>proportional control</em>, or P-control, instead of bang-bang control. Instead of applying a correction of a fixed size, we can apply a correction <em>proportional</em> to the magnitude of the error between the desired setpoint and the current distance to the wall.</p>
+
+                  <p>P-control can be implemented for optional <a href="../syllabus.html#sec_adv_ext">advanced extension credit</a>.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todoAE_3_i">Advanced Extension P1.3.i (1 extension point):</strong>
+                      Implement a wall follower using P-control.
+                    </li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Instead of using a fixed correction size, the magnitude of the correction will be <code>kp * error</code>. You will need to declare and tune variable <code>kp</code>, often called the <em>proportional gain</em>.</li>
+                  </ul>
+
                 </section>
 
                 <!-- TASKS -->
@@ -321,7 +336,12 @@ make</code></pre>
                     <h2><a href="#adv_ext">Advanced Extensions</a></h2>
                   </header>
 
-                  <p>TODO</p>
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">
+                      <strong><a href="#todoAE_3_i">Advanced Extension P1.3.i</a> (1 extension point):</strong>
+                      Implement a wall follower using P-control.
+                    </li>
+                  </ul>
 
               </section>
 
