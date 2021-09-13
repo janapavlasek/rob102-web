@@ -47,6 +47,8 @@
                       In this project, you will program the MBot-Omni to autonomously follow a wall in C++. You will be writing the code directly on the robot.
                     </p>
 
+                    <p>This project will be done in teams of two. The instructors will assign teammates.</p>
+
                     <ul>
                       <li><a href="#getting_code">Getting the Code</a>
                       <li><a href="#submitting">Submitting the Assignment</a></li>
@@ -68,14 +70,20 @@
 
                     <h2 id="getting_code">Getting the Code</h2>
 
+                    <p>One repository per team will be created for this project. Both teammates will have access to the repository and will be able to view it and make changes. Both teammates will share ownership of the code and receive credit for writing the code through the license file.</p>
+
                     <p>Use the following invite link to accept the assignment on the Github Classroom:</p>
 
                     <ul class="link-box">
                       <li class="icon solid fa-link">
                         <strong>Accept the assignment:</strong>
-                        <a href="TODO" target="_blank">TODO</a>
+                        <a href="https://classroom.github.com/g/f1yLPoIG" target="_blank">https://classroom.github.com/g/f1yLPoIG</a>
                       </li>
                     </ul>
+
+                    <p>The first teammate to accept will need to create a new team. The team must be named <strong>P1 UM Team &#35;</strong> for UM students, and <strong>P1 Berea Team &#35;</strong> for Berea students. Replace <strong>&#35;</strong> with the team number assigned to you. The next teammate should join the team from the list of existing teams.</p>
+
+                    <span class="image main"><img src="../images/p1/git_create_team.png" alt="" style="max-width:600px;"/></span>
 
                     <p>You will be cloning the repository <em>on the robot's Raspberry Pi</em>. See the <a href="../tutorials/robot.html">robot tutorial</a> for instructions on how to open a remote VSCode session connected to the robot. Once you are connected to the robot, in VSCode, open a terminal. This should be a terminal in the robot's Raspberry Pi. Then, clone the repository in the home directory:</p>
                     <pre><code class="language-bash">git clone &lt;ADDRESS&gt;</code></pre>
@@ -85,7 +93,21 @@
 
                     <h2 id="submitting">Submitting the Assignment</h2>
 
-                    <p>Your submission for this assignment should include your code and a video demonstrating your robot completing each of the three parts of this assignment.</p>
+                    <p>Your submission for this assignment should include your code and a video demonstrating your robot completing each of the three parts of this assignment. You should make one submission for your team. Teammates will be graded together.</p>
+
+                    <p><strong>Modify the LICENSE.txt file to include the names of all teammates.</strong> Make sure the change is committed to your repository. </p>
+
+                    <ul class="todo">
+                      <li class="icon solid fa-laptop-code">
+                        <strong id="todo0">P1.0 (0 points):</strong> In the file <code>LICENSE.txt</code>, replace <code>&lt;COPYRIGHT HOLDER&gt;</code> with the names of all teammates, separated by commas. Replace <code>&lt;YEAR&gt;</code> with the current year.
+                      </li>
+                    </ul>
+
+                    <p><strong>Submitting the code:</strong> Tag the verion of the code you wish to submit, just like you did for <a href="a0.html#submitting">Project 0</a>.</p>
+
+                    <p><strong>Submitting the video:</strong> Modify the file <code>README.md</code> to include a link to a video demonstrating all three parts of the project. You can submit one video for all the parts, or one video for each part. Commit the changes to <code>README.md</code>.</p>
+
+                    <p><em>Note:</em> Consider uploading your video to YouTube. You can make it public or unlisted if you prefer. Alternatively, you can upload your video to Google Drive (you have unlimited storage through your UM account). If you do this, make sure the link is accessible to the instructors.</p>
 
                 </section>
 
@@ -199,7 +221,13 @@ make</code></pre>
                     <h2><a href="#proj_desc">Project Description</a></h2>
                   </header>
 
-                  <p>This project is separated into three parts. <a href="#sec_square">Part 1</a> is intended to help you get used to programming the robot and sending velocity commands to drive it. <a href="#sec_safe">Part 2</a> is intended as an introduction to using the Lidar. <a href="#sec_wall_follow">Part 3</a> is the wall follower. Most of the time you spend on this project should be spent on this part.</p>
+                  <p>This project is separated into three parts. Most of the time you spend on this project should be spent on part 3.</p>
+
+                  <ol>
+                    <li><a href="#sec_square">Part 1</a>: Intended to help you get used to programming the robot and sending velocity commands to drive it. </li>
+                    <li><a href="#sec_safe">Part 2</a>: Intended as an introduction to using the Lidar.</li>
+                    <li><a href="#sec_wall_follow">Part 3</a>: The wall follower. </li>
+                  </ol>
 
                   <p>A number of functions have been provided for you along with the template code. Make sure you read the <a href="#code">code overview</a> to learn how to use them.</p>
 
@@ -307,6 +335,10 @@ make</code></pre>
                   </header>
 
                   <ul class="todo">
+                    <li class="icon solid fa-laptop-code">
+                      <strong><a href="#todo0">P1.0</a> (0 points):</strong>
+                      In the file <code>LICENSE.txt</code>, replace <code>&lt;COPYRIGHT HOLDER&gt;</code> with the names of all teammates, separated by commas. Replace <code>&lt;YEAR&gt;</code> with the current year.
+                    </li>
                     <li class="icon solid fa-laptop-code">
                       <strong><a href="#todo1_1">P1.1.1</a> (2 points):</strong>
                       In the file <code>drive_square.cpp</code>, write code to drive the robot in a square three times.
