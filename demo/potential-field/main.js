@@ -2,11 +2,11 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var config = {
   // Sim info
@@ -39,224 +39,6 @@ function MapFileSelect(props) {
     { className: "file-input-wrapper" },
     React.createElement("input", { className: "file-input", type: "file", onChange: props.onChange })
   );
-}
-
-/*******************
- * DRAWING HELPERS
- *******************/
-
-function colourStringToRGB(colour_str) {
-  var rgb = [parseInt(colour_str.substring(1, 3), 16), parseInt(colour_str.substring(3, 5), 16), parseInt(colour_str.substring(5, 7), 16)];
-  return rgb;
-}
-
-function getColor(prob, colour_low, colour_high) {
-  // Takes a probability (number from 0 to 1) and converts it into a color code
-  var colour_low_a = colourStringToRGB(colour_low);
-  var colour_high_a = colourStringToRGB(colour_high);
-
-  var hex = function hex(x) {
-    x = x.toString(16);
-    return x.length == 1 ? '0' + x : x;
-  };
-
-  var r = Math.ceil(colour_high_a[0] * prob + colour_low_a[0] * (1 - prob));
-  var g = Math.ceil(colour_high_a[1] * prob + colour_low_a[1] * (1 - prob));
-  var b = Math.ceil(colour_high_a[2] * prob + colour_low_a[2] * (1 - prob));
-
-  var color = hex(r) + hex(g) + hex(b);
-  return "#" + color;
-}
-
-var GridCellCanvas = function () {
-  function GridCellCanvas() {
-    _classCallCheck(this, GridCellCanvas);
-
-    this.canvas = null;
-    this.ctx = null;
-
-    this.width = 0;
-    this.height = 0;
-    this.cellSize = 0;
-  }
-
-  _createClass(GridCellCanvas, [{
-    key: "init",
-    value: function init(canvas) {
-      this.canvas = canvas;
-
-      this.ctx = this.canvas.getContext('2d');
-      this.ctx.transform(1, 0, 0, -1, 0, 0);
-      this.ctx.transform(1, 0, 0, 1, 0, -this.canvas.width);
-
-      this.width = this.canvas.width;
-      this.height = this.canvas.height;
-      this.cellSize = this.canvas.width / this.width;
-    }
-  }, {
-    key: "setSize",
-    value: function setSize(width, height) {
-      this.width = width;
-      this.height = height;
-      this.cellSize = this.canvas.width / this.width;
-    }
-  }, {
-    key: "getCellIdx",
-    value: function getCellIdx(i, j) {
-      return i + j * this.width;
-    }
-  }, {
-    key: "clear",
-    value: function clear() {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
-  }, {
-    key: "drawCell",
-    value: function drawCell(cell, size, color) {
-      var scale = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-
-      var i = cell[1];
-      var j = cell[0];
-      var shift = size * (1 - scale) / 2;
-      var start_x = i * size + shift;
-      var start_y = j * size + shift;
-
-      this.ctx.beginPath();
-      this.ctx.fillStyle = color;
-      this.ctx.fillRect(start_x, start_y, size * scale, size * scale);
-    }
-  }, {
-    key: "drawCells",
-    value: function drawCells(cells, colour_low, colour_high) {
-      var alpha = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "ff";
-
-      if (cells.length !== this.width * this.height) {
-        return;
-      }
-
-      this.clear();
-      for (var i = 0; i < this.width; i++) {
-        for (var j = 0; j < this.height; j++) {
-          var prob = cells[this.getCellIdx(i, j)];
-          var color = getColor(prob, colour_low, colour_high);
-          this.drawCell([j, i], this.cellSize, color + alpha);
-        }
-      }
-    }
-  }, {
-    key: "clearCell",
-    value: function clearCell(cell, size) {
-      var start_x = cell[1] * size;
-      var start_y = cell[0] * size;
-
-      this.ctx.clearRect(start_x, start_y, size, size);
-    }
-  }]);
-
-  return GridCellCanvas;
-}();
-
-/*******************
- * MAP HELPERS
- *******************/
-
-function parseMap(data) {
-  var map = {};
-
-  var lines = data.trim().split('\n');
-  var header = lines.shift();
-  header = header.split(/\s+/);
-
-  map.origin = [parseFloat(header[0]), parseFloat(header[1])];
-  map.width = parseFloat(header[2]);
-  map.height = parseFloat(header[3]);
-  map.meters_per_cell = parseFloat(header[4]);
-  map.num_cells = map.width * map.height;
-
-  map.cells = [];
-
-  var _iteratorNormalCompletion = true;
-  var _didIteratorError = false;
-  var _iteratorError = undefined;
-
-  try {
-    for (var _iterator = lines[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-      var line = _step.value;
-
-      line = line.trim().split(/\s+/);
-
-      if (line.length == 1) continue;
-
-      var _iteratorNormalCompletion2 = true;
-      var _didIteratorError2 = false;
-      var _iteratorError2 = undefined;
-
-      try {
-        for (var _iterator2 = line[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-          var ele = _step2.value;
-
-          map.cells.push(parseInt(ele));
-        }
-      } catch (err) {
-        _didIteratorError2 = true;
-        _iteratorError2 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-            _iterator2.return();
-          }
-        } finally {
-          if (_didIteratorError2) {
-            throw _iteratorError2;
-          }
-        }
-      }
-    }
-  } catch (err) {
-    _didIteratorError = true;
-    _iteratorError = err;
-  } finally {
-    try {
-      if (!_iteratorNormalCompletion && _iterator.return) {
-        _iterator.return();
-      }
-    } finally {
-      if (_didIteratorError) {
-        throw _iteratorError;
-      }
-    }
-  }
-
-  map.cells = normalizeList(map.cells);
-
-  if (map.cells.length !== map.num_cells) {
-    console.warn("Map has wrong number of cells:", map.cells.length, "!==", map.num_cells);
-  }
-
-  return map;
-}
-
-function normalizeList(list) {
-  if (list.length < 1) return list;
-  if (list.length === 1) return [1];
-
-  // Find min and max values.
-  // Note: Using JavaScript's Math.min(...) and Math.min(...) causes issues if
-  // the array is too big to unpack.
-  var min_val = list[0];
-  var max_val = list[0];
-
-  for (var i = 1; i < list.length; i++) {
-    min_val = list[i] < min_val ? list[i] : min_val;
-    max_val = list[i] > max_val ? list[i] : max_val;
-  }
-
-  // Normalize the values.
-  for (var i = 0; i < list.length; i++) {
-    list[i] = (list[i] - min_val) / (max_val - min_val);
-  }
-
-  return list;
 }
 
 /*******************
@@ -494,16 +276,15 @@ var SceneView = function (_React$Component4) {
       drawFieldIncrease: false
     };
 
-    _this4.field = [];
-    _this4.fieldGrid = new GridCellCanvas();
+    _this4.field = new PotentialField(config.COLLISION_THRESHOLD, config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH);
+    _this4.field.setBrush(config.PAINTBRUSH_RADIUS, config.PAINT_CELL_DELTA);
     return _this4;
   }
 
   _createClass(SceneView, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.fieldGrid.init(this.refs.fieldCanvas);
-      this.refs.fieldCanvas.style.display = 'none';
+      this.field.init(this.refs.fieldCanvas);
     }
   }, {
     key: "posToPixels",
@@ -530,9 +311,8 @@ var SceneView = function (_React$Component4) {
         clickedCell: [],
         goalCell: [] });
 
-      this.field = Array(result.num_cells).fill(1.0);
-      this.fieldGrid.setSize(this.state.width, this.state.height);
-      this.drawField(this.field);
+      this.field.setCells(this.state.cells, this.state.width, this.state.height);
+      this.field.drawField();
     }
   }, {
     key: "onFileChange",
@@ -552,9 +332,6 @@ var SceneView = function (_React$Component4) {
         _this5.updateMap(map);
       };
       fr.readAsText(this.state.mapfile);
-
-      // var map_data = {type: "map_file",
-      //                 data: { file_name: this.state.mapfile.name } };
     }
   }, {
     key: "onMapClick",
@@ -580,7 +357,8 @@ var SceneView = function (_React$Component4) {
         this.setState({ isUserDrawing: true });
         var row = Math.floor(y / this.state.cellSize);
         var col = Math.floor(x / this.state.cellSize);
-        this.changeFieldCell(row, col);
+
+        this.field.changeFieldCell(row, col);
       } else {
         this.onMapClick(x, y);
       }
@@ -597,7 +375,8 @@ var SceneView = function (_React$Component4) {
         var y = this.rect.bottom - event.clientY;
         var row = Math.floor(y / this.state.cellSize);
         var col = Math.floor(x / this.state.cellSize);
-        this.changeFieldCell(row, col);
+
+        this.field.changeFieldCell(row, col);
       }
     }
   }, {
@@ -628,10 +407,12 @@ var SceneView = function (_React$Component4) {
       this.setState({ x: newCoord[0], y: newCoord[1] });
     }
   }, {
-    key: "onGoalClear",
-    value: function onGoalClear() {
+    key: "onFieldClear",
+    value: function onFieldClear() {
+      this.field.reset();
       this.setState({ clickedCell: [],
-        goalCell: [] });
+        goalCell: [],
+        path: [] });
     }
   }, {
     key: "setGoal",
@@ -646,28 +427,26 @@ var SceneView = function (_React$Component4) {
       return valid;
     }
   }, {
-    key: "onPlan",
-    value: function onPlan() {
-      // If goal isn't valid, don't plan.
-      if (!this.setGoal(this.state.clickedCell)) return;
-      // Clear visted canvas
+    key: "onStart",
+    value: function onStart() {
       var start_row = Math.floor(this.state.y / this.state.cellSize);
       var start_col = Math.floor(this.state.x / this.state.cellSize);
-      var plan_data = { type: "plan",
-        data: {
-          map_name: this.state.mapfile.name,
-          goal: "[" + this.state.clickedCell[0] + " " + this.state.clickedCell[1] + "]",
-          start: "[" + start_row + " " + start_col + "]"
-        }
-      };
+
+      var path = this.field.gradientDescent([start_row, start_col]);
+      this.setState({ path: path });
+
+      // Start robot motion.
+      this.i = 0;
+      this.interval = setInterval(this.timer.bind(this), 100);
     }
   }, {
     key: "onFieldCheck",
     value: function onFieldCheck() {
       if (!this.state.showField) {
-        this.refs.fieldCanvas.style.display = 'block';
+        this.field.show();
       } else {
-        this.refs.fieldCanvas.style.display = 'none';
+        this.field.hide();
+        this.field.setDraw(false);
       }
 
       this.setState({ showField: !this.state.showField, drawFieldIncrease: false });
@@ -675,60 +454,8 @@ var SceneView = function (_React$Component4) {
   }, {
     key: "onIncreaseCheck",
     value: function onIncreaseCheck() {
+      this.field.setDraw(!this.state.drawFieldIncrease);
       this.setState({ drawFieldIncrease: !this.state.drawFieldIncrease });
-    }
-  }, {
-    key: "drawField",
-    value: function drawField(cells) {
-      if (cells.length !== this.fieldGrid.width * this.fieldGrid.height) {
-        return;
-      }
-
-      this.fieldGrid.clear();
-      for (var i = 0; i < this.fieldGrid.width; i++) {
-        for (var j = 0; j < this.fieldGrid.height; j++) {
-          var idx = this.fieldGrid.getCellIdx(i, j);
-          if (this.state.cells[idx] > config.COLLISION_THRESHOLD) continue;
-
-          var prob = cells[idx];
-          var color = getColor(prob, config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH);
-          this.fieldGrid.drawCell([j, i], this.fieldGrid.cellSize, color);
-        }
-      }
-    }
-  }, {
-    key: "changeFieldCell",
-    value: function changeFieldCell(row, col) {
-      // var idx = this.fieldGrid.getCellIdx(col, row);
-      // if (this.state.cells[idx] > config.COLLISION_THRESHOLD) return;
-
-      for (var i = row - config.PAINTBRUSH_RADIUS; i < row + config.PAINTBRUSH_RADIUS; i++) {
-        for (var j = col - config.PAINTBRUSH_RADIUS; j < col + config.PAINTBRUSH_RADIUS; j++) {
-          if (Math.pow(i - row, 2) + Math.pow(j - col, 2) > Math.pow(config.PAINTBRUSH_RADIUS, 2)) continue;
-
-          var idx = this.fieldGrid.getCellIdx(j, i);
-          if (idx < 0 || idx >= this.state.num_cells) continue;
-          if (this.state.cells[idx] > config.COLLISION_THRESHOLD) continue;
-
-          if (!this.state.drawFieldIncrease) {
-            this.field[idx] = Math.max(this.field[idx] - config.PAINT_CELL_DELTA, 0);
-          } else {
-            this.field[idx] = Math.min(this.field[idx] + config.PAINT_CELL_DELTA, 1);
-          }
-
-          var color = getColor(this.field[idx], config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH);
-          this.fieldGrid.drawCell([i, j], this.fieldGrid.cellSize, color);
-        }
-      }
-      // if (!this.state.drawFieldIncrease) {
-      //   this.field[idx] = Math.max(this.field[idx] - config.PAINT_CELL_DELTA, 0);
-      // }
-      // else {
-      //   this.field[idx] = Math.min(this.field[idx] + config.PAINT_CELL_DELTA, 1);
-      // }
-
-      // var color = getColor(this.field[idx], config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH);
-      // this.fieldGrid.drawCell([row, col], this.fieldGrid.cellSize, color);
     }
   }, {
     key: "render",
@@ -763,14 +490,14 @@ var SceneView = function (_React$Component4) {
           React.createElement(
             "button",
             { className: "button", onClick: function onClick() {
-                return _this6.onGoalClear();
+                return _this6.onFieldClear();
               } },
-            "Clear Goal"
+            "Clear Field"
           ),
           React.createElement(
             "button",
             { className: "button", onClick: function onClick() {
-                return _this6.onPlan();
+                return _this6.onStart();
               } },
             "Start!"
           )
