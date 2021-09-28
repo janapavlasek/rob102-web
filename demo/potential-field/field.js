@@ -13,10 +13,10 @@ var PotentialField = function () {
     this.color_high = color_high;
 
     this.increase = false;
-    this.brush_radius = 3;
-    this.brush_delta = 0.01;
+    this.brushRadius = 3;
+    this.brushDelta = 0.01;
 
-    this.cell_odds = [];
+    this.cellOdds = [];
     this.field = [];
 
     this.fieldGrid = new GridCellCanvas();
@@ -49,13 +49,13 @@ var PotentialField = function () {
   }, {
     key: 'setBrush',
     value: function setBrush(radius, delta) {
-      this.brush_radius = radius;
-      this.brush_delta = delta;
+      this.brushRadius = radius;
+      this.brushDelta = delta;
     }
   }, {
     key: 'setCells',
     value: function setCells(cells, width, height) {
-      this.cell_odds = cells;
+      this.cellOdds = cells;
       this.fieldGrid.setSize(width, height);
       this.reset();
     }
@@ -68,7 +68,7 @@ var PotentialField = function () {
   }, {
     key: 'drawField',
     value: function drawField() {
-      if (this.cell_odds.length !== this.fieldGrid.width * this.fieldGrid.height) {
+      if (this.cellOdds.length !== this.fieldGrid.width * this.fieldGrid.height) {
         return;
       }
 
@@ -76,7 +76,7 @@ var PotentialField = function () {
       for (var i = 0; i < this.fieldGrid.width; i++) {
         for (var j = 0; j < this.fieldGrid.height; j++) {
           var idx = this.fieldGrid.getCellIdx(i, j);
-          if (this.cell_odds[idx] > this.collision_thresh) continue;
+          if (this.cellOdds[idx] > this.collision_thresh) continue;
 
           var prob = this.field[idx];
           var color = getColor(prob, this.color_low, this.color_high);
@@ -87,18 +87,18 @@ var PotentialField = function () {
   }, {
     key: 'changeFieldCell',
     value: function changeFieldCell(row, col) {
-      for (var i = row - this.brush_radius; i < row + this.brush_radius; i++) {
-        for (var j = col - this.brush_radius; j < col + this.brush_radius; j++) {
+      for (var i = row - this.brushRadius; i <= row + this.brushRadius; i++) {
+        for (var j = col - this.brushRadius; j <= col + this.brushRadius; j++) {
           // Skip cells outside a circle pattern.
-          if (Math.pow(i - row, 2) + Math.pow(j - col, 2) > Math.pow(this.brush_radius, 2)) continue;
+          if (Math.pow(i - row, 2) + Math.pow(j - col, 2) > Math.pow(this.brushRadius - 0.5, 2)) continue;
 
           var idx = this.fieldGrid.getCellIdx(j, i);
           // Skip out of bounds indicies or indices in collision.
           if (idx < 0 || idx >= this.field.length) continue;
-          if (this.cell_odds[idx] > this.collision_thresh) continue;
+          if (this.cellOdds[idx] > this.collision_thresh) continue;
 
           var dir = this.increase ? 1 : -1;
-          this.field[idx] = Math.min(Math.max(this.field[idx] + dir * this.brush_delta, 0), 1);
+          this.field[idx] = Math.min(Math.max(this.field[idx] + dir * this.brushDelta, 0), 1);
 
           var color = getColor(this.field[idx], this.color_low, this.color_high);
           this.fieldGrid.drawCell([i, j], this.fieldGrid.cellSize, color);
@@ -134,7 +134,7 @@ var PotentialField = function () {
         var max_idx = 0;
         for (var n = 0; n < nbrs.length; n++) {
           var idx = this.fieldGrid.getCellIdx(nbrs[n][1], nbrs[n][0]);
-          if (this.cell_odds[idx] > this.collision_thresh) continue;
+          if (this.cellOdds[idx] > this.collision_thresh) continue;
 
           var grad = this.field[idx] - this.field[curr_idx];
           if (grad < max_delta) {

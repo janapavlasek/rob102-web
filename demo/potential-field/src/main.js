@@ -12,7 +12,7 @@ var config = {
   // Display info
   MAP_COLOUR_HIGH: "#00274C",      // Michigan blue
   MAP_COLOUR_LOW: "#ffffff",       // White
-  FIELD_COLOUR_HIGH: "#2F65A7", // "#2196F3", //"#444444",    // Grey
+  FIELD_COLOUR_HIGH: "#2F65A7",
   FIELD_COLOUR_LOW: "#ffffff",     // White
   FIELD_ALPHA: "FF",
   PATH_COLOUR: "#00B2A9",          // Taubman Teal
@@ -410,7 +410,6 @@ class SceneView extends React.Component {
   }
 
   onBrushChange(evt) {
-    console.log(evt);
     this.setState({brushRadius: evt.target.value});
     this.field.setBrush(evt.target.value, config.PAINT_CELL_DELTA);
   }
