@@ -1,5 +1,7 @@
 'use strict';
 
+//  Test: npx babel --watch src --out-dir . --presets react-app/prod
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -273,7 +275,8 @@ var SceneView = function (_React$Component4) {
       showField: false,
       isRobotClicked: false,
       isUserDrawing: false,
-      drawFieldIncrease: false
+      drawFieldIncrease: false,
+      brushRadius: config.PAINTBRUSH_RADIUS
     };
 
     _this4.field = new PotentialField(config.COLLISION_THRESHOLD, config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH);
@@ -458,6 +461,13 @@ var SceneView = function (_React$Component4) {
       this.setState({ drawFieldIncrease: !this.state.drawFieldIncrease });
     }
   }, {
+    key: "onBrushChange",
+    value: function onBrushChange(evt) {
+      console.log(evt);
+      this.setState({ brushRadius: evt.target.value });
+      this.field.setBrush(evt.target.value, config.PAINT_CELL_DELTA);
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this6 = this;
@@ -504,7 +514,7 @@ var SceneView = function (_React$Component4) {
         ),
         React.createElement(
           "div",
-          { className: "status-wrapper" },
+          { className: "draw-wrapper" },
           React.createElement(
             "div",
             { className: "field-toggle-wrapper" },
@@ -520,7 +530,7 @@ var SceneView = function (_React$Component4) {
           ),
           this.state.showField && React.createElement(
             "div",
-            { className: "field-toggle-wrapper" },
+            { className: "increase-toggle-wrapper" },
             "Increase Field:",
             React.createElement(
               "label",
@@ -529,6 +539,20 @@ var SceneView = function (_React$Component4) {
                   return _this6.onIncreaseCheck();
                 } }),
               React.createElement("span", { className: "slider round" })
+            )
+          ),
+          this.state.showField && React.createElement(
+            "div",
+            { className: "slider-wrapper" },
+            "Brush Size:",
+            React.createElement(
+              "label",
+              { className: "range-slider" },
+              React.createElement("input", { className: "range", type: "range", min: "1", max: "10",
+                value: this.state.brushRadius,
+                onChange: function onChange(evt) {
+                  return _this6.onBrushChange(evt);
+                } })
             )
           )
         ),

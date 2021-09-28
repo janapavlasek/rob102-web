@@ -1,5 +1,7 @@
 'use strict';
 
+//  Test: npx babel --watch src --out-dir . --presets react-app/prod
+
 var config = {
   // Sim info
   MAP_DISPLAY_WIDTH: 800,   // px
@@ -236,6 +238,7 @@ class SceneView extends React.Component {
       isRobotClicked: false,
       isUserDrawing: false,
       drawFieldIncrease: false,
+      brushRadius: config.PAINTBRUSH_RADIUS,
     };
 
     this.field = new PotentialField(config.COLLISION_THRESHOLD, config.FIELD_COLOUR_LOW, config.FIELD_COLOUR_HIGH)
@@ -406,6 +409,12 @@ class SceneView extends React.Component {
     this.setState({drawFieldIncrease: !this.state.drawFieldIncrease});
   }
 
+  onBrushChange(evt) {
+    console.log(evt);
+    this.setState({brushRadius: evt.target.value});
+    this.field.setBrush(evt.target.value, config.PAINT_CELL_DELTA);
+  }
+
   render() {
     var canvasStyle = {
       width: config.MAP_DISPLAY_WIDTH + "px",
@@ -424,7 +433,7 @@ class SceneView extends React.Component {
           <button className="button" onClick={() => this.onStart()}>Start!</button>
         </div>
 
-        <div className="status-wrapper">
+        <div className="draw-wrapper">
           <div className="field-toggle-wrapper">
             Show Field:
             <label className="switch">
@@ -433,11 +442,20 @@ class SceneView extends React.Component {
             </label>
           </div>
           {this.state.showField &&
-          <div className="field-toggle-wrapper">
+          <div className="increase-toggle-wrapper">
             Increase Field:
             <label className="switch">
               <input type="checkbox" onClick={() => this.onIncreaseCheck()}/>
               <span className="slider round"></span>
+            </label>
+          </div>}
+          {this.state.showField &&
+          <div className="slider-wrapper">
+            Brush Size:
+            <label className="range-slider">
+              <input className="range" type="range" min="1" max="10"
+                     value={this.state.brushRadius}
+                     onChange={(evt) => this.onBrushChange(evt)}/>
             </label>
           </div>}
         </div>
