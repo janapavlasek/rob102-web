@@ -7,7 +7,7 @@ var config = {
   MAP_DISPLAY_WIDTH: 800,   // px
   ROBOT_SIZE: 0.274,        // m, diameter
   ROBOT_DEFAULT_SIZE: 100,  // px
-  COLLISION_THRESHOLD: 0.5,
+  COLLISION_THRESHOLD: 0.4,
 
   // Display info
   MAP_COLOUR_HIGH: "#00274C",      // Michigan blue

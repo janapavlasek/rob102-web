@@ -90,8 +90,9 @@ class PotentialField {
 
   neighbors8(row, col) {
     var nbrs = [];
-    for (var i = row - 1; i <= row + 2; i++) {
-      for (var j = col - 1; j <= col + 2; j++) {
+    for (var i = row - 1; i <= row + 1; i++) {
+      for (var j = col - 1; j <= col + 1; j++) {
+        if (i == row && j == col) continue;
         var idx = this.fieldGrid.getCellIdx(j, i);
         if (idx < 0 || idx >= this.field.length) continue;
         nbrs.push([i, j]);
