@@ -98,7 +98,8 @@ var PotentialField = function () {
           if (this.cellOdds[idx] > this.collision_thresh) continue;
 
           var dir = this.increase ? 1 : -1;
-          this.field[idx] = Math.min(Math.max(this.field[idx] + dir * this.brushDelta, 0), 1);
+          var delta = this.brushDelta * (1 - Math.sqrt(Math.pow(i - row, 2) + Math.pow(j - col, 2)) / this.brushRadius);
+          this.field[idx] = Math.min(Math.max(this.field[idx] + dir * delta, 0), 1);
 
           var color = getColor(this.field[idx], this.color_low, this.color_high);
           this.fieldGrid.drawCell([i, j], this.fieldGrid.cellSize, color);
