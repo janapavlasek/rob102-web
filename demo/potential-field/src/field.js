@@ -50,6 +50,20 @@ class PotentialField {
     this.drawField();
   }
 
+  asString() {
+    var data = this.fieldGrid.width + " " + this.fieldGrid.height + "\n";
+    for (var i = 0; i < this.field.length; i++) {
+      data += this.field[i];
+      if ((i + 1) % this.fieldGrid.width == 0) {
+        data += "\n";
+      }
+      else {
+        data += " ";
+      }
+    }
+    return data;
+  }
+
   drawField() {
     if (this.cellOdds.length !== this.fieldGrid.width * this.fieldGrid.height) {
       return;

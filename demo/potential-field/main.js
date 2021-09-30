@@ -337,6 +337,16 @@ var SceneView = function (_React$Component4) {
       fr.readAsText(this.state.mapfile);
     }
   }, {
+    key: "onDownload",
+    value: function onDownload() {
+      var element = document.createElement("a");
+      var file = new Blob([this.field.asString()], { type: 'text/plain' });
+      element.href = URL.createObjectURL(file);
+      element.download = "field.map";
+      document.body.appendChild(element); // Required for this to work in FireFox
+      element.click();
+    }
+  }, {
     key: "onMapClick",
     value: function onMapClick(x, y) {
       if (!this.state.mapLoaded) return;
@@ -495,6 +505,13 @@ var SceneView = function (_React$Component4) {
                 return _this6.onFileUpload();
               } },
             "Upload Map"
+          ),
+          React.createElement(
+            "button",
+            { className: "button", onClick: function onClick() {
+                return _this6.onDownload();
+              } },
+            "Download Field"
           ),
           React.createElement(
             "button",

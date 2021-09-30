@@ -290,6 +290,15 @@ class SceneView extends React.Component {
     fr.readAsText(this.state.mapfile);
   };
 
+  onDownload() {
+    const element = document.createElement("a");
+    const file = new Blob([this.field.asString()], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "field.map";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
   onMapClick(x, y) {
     if (!this.state.mapLoaded) return;
     if (this.state.showField) return;
@@ -428,6 +437,7 @@ class SceneView extends React.Component {
 
         <div className="button-wrapper">
           <button className="button" onClick={() => this.onFileUpload()}>Upload Map</button>
+          <button className="button" onClick={() => this.onDownload()}>Download Field</button>
           <button className="button" onClick={() => this.onFieldClear()}>Clear Field</button>
           <button className="button" onClick={() => this.onStart()}>Start!</button>
         </div>
