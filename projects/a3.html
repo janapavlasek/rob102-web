@@ -56,14 +56,7 @@
                         <li><a href="#grading">Grading Breakdown</a></li>
                       </ul> -->
                     </li>
-                    <!-- <li>
-                      <a href="#code">Code Overview</a>
-                      <ul>
-                        <li><a href="#code_web">Running the Webapp in the Docker</a></li>
-                        <li><a href="#code_robot">Running Path Planning on the Robot</a></li>
-                        <li><a href="#code_utils">Provided Utility Functions</a></li>
-                      </ul>
-                    </li> -->
+                    <li><a href="#code">Code Overview</a></li>
                     <li><a href="#proj_desc">Project Description</a>
                       <ul>
                         <li><a href="#sec_node">Part 1: Storing Node Data</a></li>
@@ -117,6 +110,67 @@
 
 
                   <!-- <h3 id="grading">Grading Breakdown</h3> -->
+
+                </section>
+
+                <section id="code">
+                  <header class="major">
+                    <h2><a href="#code">Code Overview</a></h2>
+                  </header>
+
+                  <p>The code for Project 3 will be written in the same repository as the Project 2 code. Refer to the <a href="a2.html#code">Project 2 code overview</a> for instructions on how to run the code.</p>
+                  <p>To test the Breadth First Search or A-Star functions, select the &quot;Breadth First Search&quot; or &quot;A-Star&quot; algorithm options in the web app. Your functions for each algorithm will be called by the navigation web server.</p>
+
+                  <h3 id="code_utils">Provided Utility Functions</h3>
+
+                  <p>You have access to all the <a href="a2.html#code_utils">utility functions and structs from Project 2</a>. This section will describe additional functions relevant to this project, from the header <code>include/autonomous_navigation/utils/graph_utils.h</code> (implemented in <code>src/utils/graph_utils.cpp</code>). Other than those marked, these are implemented for you.</p>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs">
+                      <code>bool loadFromFile(const std::string&amp; file_path, GridGraph&amp; graph)</code>:
+                      Loads graph data from a file. Also initializes the distance transform values to all zeros and calls the <code>initGraph()</code> function.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>void initGraph(GridGraph&amp; graph)</code>:
+                      <em>(TODO, see <a href="sec_node">Part 1</a>)</em> Initializes the graph data.<br/>
+                      <em>Note:</em> This function should not modify <code>graph.obstacle_distances</code>.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>std::vector<int> findNeighbors(int idx, const GridGraph&amp; graph)</code>:
+                      Returns a list of the indices of the neighbors of the cell at a given index in the graph.<br/>
+                      <em>Warning:</em> This only works if <code>cellToIdx()</code> and <code>idxToCell()</code> are implemented.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>bool checkCollision(int idx, const GridGraph&amp; graph)</code>:
+                      Uses the distance transform values to check whether visiting the cell at <code>idx</code> would result in a collision.<br/>
+                      <em>Warning:</em> This only works if the distance transform values are stored in <code>graph.obstacle_distances</code>. When using the web app, the function <code>distanceTransform()</code> will be called when the map is loaded.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>bool checkCollisionSlow(int idx, const GridGraph&amp; graph)</code>:
+                      Manually checks in a radius around the given cell for collisions.<br/>
+                      <em>Warning:</em> This version does not require the distance transform but will be slower than the above version.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>int getParent(int idx, const GridGraph&amp; graph)</code>:
+                      <em>(TODO, see <a href="sec_node">Part 1</a>)</em>
+                      Returns the index of the parent of the node at <code>idx</code>.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>float getScore(int idx, const GridGraph&amp; graph)</code>:
+                      <em>(TODO, A-Star only, see <a href="sec_astar">Advanced Extension: A-Star</a>)</em>
+                      Returns the f-score of the node at <code>idx</code>.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>std::vector&lt;Cell&gt; tracePath(int goal, const GridGraph&amp; graph)</code>:
+                      Returns the path from the start cell to the given goal cell.<br/>
+                      <em>Warning:</em> This only works if <code>getParent()</code> is implemented.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <code>int findLowestScore(const std::vector&lt;int&gt;&amp; node_list, const GridGraph&amp; graph)</code>:
+                      Returns the index of the node with the lowest f-score.<br/>
+                      <em>Warning:</em> This only works if <code>getScore()</code> is implemented (A-Star only).
+                    </li>
+                  </ul>
 
                 </section>
 
@@ -215,6 +269,8 @@
 
                   <p>You will write code to search for and drive along a path on the robot in the file <code>src/robot_plan_path.cpp</code>. We have provided a function <code>drivePath(std::vector<Cell>& path, GridGraph& graph)</code> which will send the robot a command to follow the path defined in vector of cells <code>path</code>. This function sends a path to the motion controller. Modify the provided code template to call your path planning algorithm and then send the path to the robot.</p>
 
+                  <p><strong>Note:</strong> The utility function <code>loadFromFile()</code> initializes the radius for collision checking to the robot radius, stored in variable <code>ROBOT_RADIUS</code>, plus the width of one cell. You might want to make the collision radius larger on the robot, so that your planner is more conservative on the robot. To do this modify the value of <code>graph.collision_radius</code> after the map is loaded.</p>
+
                   <ul class="todo">
                     <li class="icon solid fa-laptop-code">
                       <strong id="todo3_1">P3.3.1:</strong>
@@ -238,6 +294,8 @@ make</code></pre>
                   <p>Do not forget the argument <code>-DOMNIBOT=On</code> when running CMake. This is how the compiler knows whether to compile the robot code (which is not compiled by default in the Docker). To run the potential field controller, in the <code>build</code> folder where you compiled, do:</p>
                   <pre><code class="language-bash">./robot_plan_path [PATH/TO/MAP] [goal_x] [goal_y]</code></pre>
                   <p>The map is stored in <code>~/botlab-bin/maps/current.map</code>. Use that path if you did not move the map since creating it. You can also pass in <code>goal_x</code> and <code>goal_y</code>, the global position of the goal, relative to the starting position of your map, in meters. If you do not pass these in, they will default to zero.</p>
+
+                  <p>When you pass in arguments to the code, do not include the square brackets.</p>
 
                   <h3 id="sec_astar">Advanced Extension: A-Star Search</h3>
 
