@@ -56,7 +56,12 @@
                         <li><a href="#grading">Grading Breakdown</a></li>
                       </ul> -->
                     </li>
-                    <li><a href="#code">Code Overview</a></li>
+                    <li><a href="#code">Code Overview</a>
+                      <ul>
+                        <li><a href="#code_changes">Changes to the Utility Functions</a></li>
+                        <li><a href="#code_utils">Provided Utility Functions</a></li>
+                      </ul>
+                    </li>
                     <li><a href="#proj_desc">Project Description</a>
                       <ul>
                         <li><a href="#sec_node">Part 1: Storing Node Data</a></li>
@@ -108,7 +113,6 @@
                     </li>
                   </ul>
 
-
                   <!-- <h3 id="grading">Grading Breakdown</h3> -->
 
                 </section>
@@ -120,6 +124,28 @@
 
                   <p>The code for Project 3 will be written in the same repository as the Project 2 code. Refer to the <a href="a2.html#code">Project 2 code overview</a> for instructions on how to run the code.</p>
                   <p>To test the Breadth First Search or A-Star functions, select the &quot;Breadth First Search&quot; or &quot;A-Star&quot; algorithm options in the web app. Your functions for each algorithm will be called by the navigation web server.</p>
+
+                  <h3 id="code_changes">Changes to the Utility Functions</h3>
+
+                  <p>A few changes should be made to the existing utility template functions to make Project 3 work better. The instructors will not make these changes for you, since they involve modifying the source file <code>src/utils/graph_utils.cpp</code> which you made changes to in Project 2. Please make these changes before starting Project 3. They should not break any of your existing code.</p>
+
+                  <ol>
+                    <li>
+                      In <code>src/utils/graph_utils.cpp</code>, in the function <code>initGraph(GridGraph&amp; graph)</code>, <em>remove</em> the following line:
+                      <pre><code class="language-cpp">graph.obstacle_distances = std::vector<float>(graph.width * graph.height, 0);</code></pre>
+                    </li>
+                    <li>
+                      In <code>include/autonomous_navigation/utils/graph_utils.h</code>, add the following function definition under the function definition for <code>checkCollision()</code>:
+                      <pre><code class="language-cpp">bool checkCollisionFast(int idx, const GridGraph&amp; graph);</code></pre>
+                    </li>
+                    <li>
+                      In <code>src/utils/graph_utils.cpp</code>, add the following function under the function <code>checkCollision()</code>:
+                      <pre><code class="language-cpp">bool checkCollisionFast(int idx, const GridGraph&amp; graph)
+{
+    return graph.obstacle_distances[idx] * graph.meters_per_cell &lt;= graph.collision_radius;
+}</code></pre>
+                    </li>
+                  </ol>
 
                   <h3 id="code_utils">Provided Utility Functions</h3>
 
@@ -141,12 +167,12 @@
                       <em>Warning:</em> This only works if <code>cellToIdx()</code> and <code>idxToCell()</code> are implemented.
                     </li>
                     <li class="icon solid fa-cogs">
-                      <code>bool checkCollision(int idx, const GridGraph&amp; graph)</code>:
+                      <code>bool checkCollisionFast(int idx, const GridGraph&amp; graph)</code>:
                       Uses the distance transform values to check whether visiting the cell at <code>idx</code> would result in a collision.<br/>
                       <em>Warning:</em> This only works if the distance transform values are stored in <code>graph.obstacle_distances</code>. When using the web app, the function <code>distanceTransform()</code> will be called when the map is loaded.
                     </li>
                     <li class="icon solid fa-cogs">
-                      <code>bool checkCollisionSlow(int idx, const GridGraph&amp; graph)</code>:
+                      <code>bool checkCollision(int idx, const GridGraph&amp; graph)</code>:
                       Manually checks in a radius around the given cell for collisions.<br/>
                       <em>Warning:</em> This version does not require the distance transform but will be slower than the above version.
                     </li>
@@ -178,6 +204,8 @@
                   <header class="major">
                     <h2><a href="#description">Project Description</a></h2>
                   </header>
+
+                  <p><strong>Before you begin implementing code for Project 3</strong>, please make the changes <a href="#code_changes">described above</a>.</p>
 
                   <p>This assignment has the following parts:</p>
 
@@ -244,10 +272,11 @@
 
     return path;
 }</code></pre>
-                  <p>Assume the graph is loaded with the corresponding map data. The function first calls <code>initGraph()</code> to make sure that all the nodes are initialized. The start and goal position are passed in as <code>Cell</code> structs.<code>Cell</code> has two integer member variables: <code>i</code> and <code>j</code>, corresponding to the row and column coordinates of the cell. When the path is found, your code should return a vector of cells, <code>std::vector&ltCell&gt</code>. You can use the provided function <code>tracePath()</code>, as follows:</p>
+                  <p>Assume the graph is loaded with the corresponding map data. The function first calls <code>initGraph()</code> to make sure that all the nodes are initialized. The start and goal position are passed in as <code>Cell</code> structs.<code>Cell</code> has two integer member variables: <code>i</code> and <code>j</code>, corresponding to the row and column coordinates of the cell. When the path is found, your code should store the path in the provided vector, <code>path</code>. You can use the provided function <code>tracePath()</code>, as follows:</p>
                   <pre><code class="language-cpp">path = tracePath(goal_idx, graph);</code></pre>
-
                   <p>where <code>goal_idx</code> is an integer value which stores the index of the goal. If you have correctly maintained the parent structure of the cells and the <code>idxToCell()</code> and <code>getParent()</code> functions are implemented, this will return the path to the start node. The start node should not have a parent. If no path was found, your code should return an empty vector.</p>
+
+                  <p>Use either <code>checkCollision()</code> or <code>checkCollisionFast()</code> to check whether a cell is in collision. It is highly recommended to use <code>checkCollisionFast()</code>. This requires that you call your distance transform function first. The results will be slightly different than <code>checkCollision()</code> if you use the Manhattan distance transform, but both are valid.</p>
 
                   <p>The function also accepts a <code>showVisitedCell</code> argument. This is to interface with helper functions which will help you visualize your algorithm in the web app. To mark a cell with coordinate <code>(i, j)</code> as visited (shown in grey) in the web app, do:</p>
                   <pre><code class="language-cpp">showVisitedCell(i, j);</code></pre>
@@ -262,7 +291,7 @@
                   <ul class="hint">
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> BFS maintains a list of nodes to visit using a First-In-First-Out data structure (or a queue). C++ has a queue implementation called <code>std::queue</code>. Assuming you have a queue <code>q</code>, <code>q.push(my_node_idx)</code> will push a value onto the back of the queue, <code>q.front()</code> will return the value at the front of the queue, and <code>q.pop()</code> will remove the first element of the queue.</li>
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> Your visit list should store integers corresponding to the indices of the nodes of interest. You can use these indices to retrieve and modify cell data directly in the graph. Do not push any structs your graph stores onto the visit list! This makes a <emph>copy</emph> of the data, so any changes you make would not be reflected in the graph.</li>
-                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not add any cells which are in collision to your visit list. Use the provided functions to check whether a given node is in collision.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not add any cells which are in collision to your visit list.</li>
                   </ul>
 
                   <h3 id="sec_robot">Part 3: Path Planning on the Robot</h3>
