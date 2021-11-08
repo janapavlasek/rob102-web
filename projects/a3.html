@@ -6,14 +6,14 @@
 -->
 <html>
   <head>
-    <title>Project 3: Optimal Planning - ROB 102</title>
+    <title>Project 3: Path Planning - ROB 102</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="../assets/css/main.css" />
     <link rel="shortcut icon" type="image/png" href="../images/mbot_overhead.png"/>
 
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/stackoverflow-light.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
   </head>
   <body class="is-preload">
@@ -37,104 +37,178 @@
               <!-- Content -->
                 <section>
                   <header class="main project">
-                    <strong>Project 3:</strong> Optimal Path Planning
+                    <strong>Project 3:</strong> Path Planning
                   </header>
 
-                  <p>In <a href="a2.html">Project 2</a>, we wrote a controller that could reach a goal using potential fields. We called this a <emph>reactive</emph> controller, because it makes decisions at each time step based on its local information to correct its state. It doesn't plan ahead to try to find the best path it can. We saw some examples where the algorithm gets stuck and can't find a path to the goal. </p>
+                  <p><font size="+2"><strong>Due November 22nd, 2021 at 11:59 PM.</strong></font></p>
 
-                  <p>In this project, we will write an <strong>optimal planning algorithm</strong>, which will find the <emph>shortest</emph> path to the goal every time. When you've completed the project, you'll be able to find paths like this one:</p>
+                  <p>In this project, we will write a <strong>path planning algorithm</strong>, which will find the <emph>shortest</emph> path to the goal every time. When you've completed the project, you'll be able to find paths like this one:</p>
 
                   <span class="image main"><img src="../images/astar_success.png" alt="" style="max-width:600px;"/></span>
 
-                  <p>We will use the same web app that we did for <a href="a2.html">Project 2</a>. You can review the instructions for running the app and using the Docker container <a href="../tutorials/app.html">here</a>. We will write code the same way and reuse a lot of the same functions and classes.</p>
+                  <p>We will use the same code base and web app that we did for <a href="a2.html">Project 2</a>. You can review the instructions for running the app and using the Docker container <a href="../tutorials/app.html">here</a>.</p>
+
+                  <ul>
+                    <li><a href="#getting_code">Getting the Code</a>
+                    <li>
+                      <a href="#submitting">Submitting the Assignment</a>
+                      <ul>
+                        <li><a href="#grading">Grading Breakdown</a></li>
+                      </ul>
+                    </li>
+                    <!-- <li>
+                      <a href="#code">Code Overview</a>
+                      <ul>
+                        <li><a href="#code_web">Running the Webapp in the Docker</a></li>
+                        <li><a href="#code_robot">Running Path Planning on the Robot</a></li>
+                        <li><a href="#code_utils">Provided Utility Functions</a></li>
+                      </ul>
+                    </li> -->
+                    <li><a href="#proj_desc">Project Description</a>
+                      <ul>
+                        <li><a href="#sec_node">Part 1: Storing Node Data</a></li>
+                        <li><a href="#sec_bfs">Part 2: Breadth First Search</a></li>
+                        <li><a href="#sec_robot">Part 3: Planning on the Robot</a></li>
+                        <li><a href="#sec_astar">Advanced Extension: A-Star Search</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="#tasks">Task Summary</a></li>
+                    <li><a href="#adv_ext">Advanced Extensions</a></li>
+                  </ul>
 
                   <hr class="major" />
 
-                  <h2 id="description">Project Description</h2>
+                  <h2 id="getting_code">Getting the Code</h2>
 
-                  <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search. For this project, we'll need some more information to keep track of certain data. In the following sections, we will implement some utility functions that will help us implement graph search algorithms. You can test that these functions are correctly implemented using the provided test scripts, as follows:</p>
-                  <pre><code class="language-bash">cd build
-./path_planning/test_graph</code></pre>
-                  <p>All tests should pass before you move on to implementing graph search.</p>
+                  <p>This project will be completed in the <code>autonomous_navigation</code> repository, which is the same one used for Project 2.</p>
 
-                  <h3>Storing Node Data</h3>
+                  <hr class="major" />
 
-                  <p>In order to perform graph search, we need to keep track of a few things for each cell:</p>
+                  <h2 id="submitting">Submitting the Assignment</h2>
+
+                  <h3 id="grading">Grading Breakdown</h3>
+
+                </section>
+
+                <section id="description">
+                  <header class="major">
+                    <h2><a href="#description">Project Description</a></h2>
+                  </header>
+
+                  <p>This assignment has the following parts:</p>
+
+                  <ol>
+                    <li><a href="#sec_node">Part 1</a>: Storing Node Data</li>
+                    <li><a href="#sec_bfs">Part 2</a>: Breadth First Search</li>
+                    <li><a href="#sec_robot">Part 3</a>: Path Planning on the Robot</li>
+                  </ol>
+
+                  <p>We also provide an advanced extension to implement the <a href="#sec_astar">A-Star search algorithm</a>, as discussed in lecture.</p>
+
+                  <h3 id="sec_node">Part 1: Storing Node Data</h3>
+
+                  <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search (see <a href="a2.html#code_utils">Project 2 description</a> for details). In order to perform graph search, we need to keep track of a few things for each cell:</p>
                     <ol>
-                      <li>The cell coordinate, <code>(i,j)</code>,</li>
-                      <li>The index where the cell is stored in the graph data structure,</li>
-                      <li>The distance from the start node to the cell along the current path,</li>
+                      <!-- <li>The cell coordinate, <code>(i,j)</code>,</li> -->
+                      <!-- <li>The index where the cell is stored in the graph data structure,</li> -->
                       <li>The cell's parent along the current path,</li>
-                      <li>(A* only) The cell's score.</li>
+                      <li>The distance from the start node to the cell along the current path,</li>
+                      <li>Whether the cell has been visited,</li>
+                      <li>(A-Star only) The cell's score.</li>
                     </ol>
-                  <p>Using the concepts we have learned so far, design code to store this data. Then, modify <code>GridGraph</code> to store the node information.</p>
+
+                  <p>Using the concepts we have learned so far, design code to store this data. Then, modify <code>GridGraph</code> to store the node information. You may extend your implementation to store any additional information you need.</p>
+
+                  <p><strong>Note:</strong> The nodes should be indexed the same way as the cells, as a single vector, as we did in Project 2. Refer to <a href="a2.html#sec_graph">Project 2, Part 0</a> for more information. You can reuse the <code>cellToIdx()</code> and <code>idxToCell()</code> functions to access node data for a specific cell.</p>
 
                   <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>grid_graph.h</code> file, design a data structure to store the cell information and modify <code>GridGraph</code> to add any new member variables accordingly.</li>
-                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>initGraph()</code> such that it initializes the cell data. You can assume the graph will be loaded when the function is called.</li>
-                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete function <code>getParent()</code> so it returns the index of the parent of the given cell. If a cell does not have a parent, it should return -1.</li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todo1_1">P3.1.1:</strong>
+                      In the <code>grid_graph.h</code> file, design a data structure to store the cell information and modify <code>GridGraph</code> to add any new member variables accordingly.
+                    </li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todo1_2">P3.1.2:</strong>
+                      In the <code>graph_utils.cpp</code> file, complete function <code>initGraph()</code> to initialize the cell data. You can assume the graph will be loaded when the function is called.
+                    </li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todo1_3">P3.1.3:</strong>
+                      In the <code>graph_utils.cpp</code> file, complete function <code>getParent()</code> so it returns the index of the parent of the given cell. If a cell does not have a parent, it should return -1.
+                    </li>
                   </ul>
 
                   <ul class="hint">
-                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You might consider implementing a struct to represent your cell node and store a vector of cell node structs in <code>GridGraph</code>.</li>
+                    <li class="icon solid fa-cogs">
+                      <strong>Hint:</strong>
+                      You might consider implementing a struct to represent your cell node and store a vector of cell node structs in <code>GridGraph</code>. Alternatively, you might consider adding a few vectors to the <code>GridGraph</code> struct to store the relevant information.
+                    </li>
+                    <li class="icon solid fa-cogs">
+                      <strong>Hint:</strong>
+                      The start node and unexplored nodes should not have parents.
+                    </li>
                   </ul>
 
-                  <h3>Getting Graph Neighbors</h3>
+                  <!-- <h3>Getting Graph Neighbors</h3> -->
 
-                  <p>We need a function that returns the neighbors of a cell at a given index. A 4-connected graph considers nodes to the left, right, top, and bottom of a cell as neighbors. An 8-connected graph considers the same nodes as a 4-connected graph plus nodes diagonal to the current node as neighbors.</p>
+                  <!-- <p>We need a function that returns the neighbors of a cell at a given index. A 4-connected graph considers nodes to the left, right, top, and bottom of a cell as neighbors. An 8-connected graph considers the same nodes as a 4-connected graph plus nodes diagonal to the current node as neighbors.</p> -->
 
-                  <ul class="todo">
+                  <!-- <ul class="todo">
                     <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete functions <code>findNeighbors4()</code> and <code>findNeighbors8()</code> such that they return a vector containing the indices of each neighbor. Include all the neighboring cells regardless of whether they are occupied.</li>
-                  </ul>
+                  </ul> -->
 
-                  <ul class="hint">
+                  <!-- <ul class="hint">
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not include any cells which fall outside the bounds of the graph as neighbors.</li>
-                  </ul>
+                  </ul> -->
 
-                  <h3 id="sec_dfs">Depth First Search</h3>
+                  <h3 id="sec_bfs">Part 2: Breadth First Search</h3>
 
-                  <p>In this section, you will write code to implement a <strong>Depth First Search (DFS)</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>depthFirstSearch()</code>, which looks like this:</p>
-                  <pre><code class="language-cpp">std::vector&ltCell&gt depthFirstSearch(GridGraph&amp graph, const Cell&amp start, const Cell&amp goal,
-                                   std::shared_ptr&ltWsServer::Connection&gt connection)
+                  <p>In this section, you will write code to implement a <strong>Breadth First Search (BFS)</strong> over a graph, given a start and goal cell. You will write your code in the file <code>src/graph_search/graph_search.cpp</code>. Your code should go in the function <code>breadthFirstSearch()</code>, which looks like this:</p>
+                  <pre><code class="language-cpp">std::vector<Cell> breadthFirstSearch(GridGraph& graph, const Cell& start, const Cell& goal, std::function<void(int, int)> showVisitedCell)
 {
-    // ...
+    std::vector<Cell> path;  // The final path should be placed here.
+    initGraph(graph);  // Make sure all the node values are reset.
+    int start_idx = cellToIdx(start.i, start.j, graph);
+
+    /**
+    * TODO (P3): Implement BFS.
+    */
+
+    return path;
 }</code></pre>
-                  <p>Assume the graph is loaded with the corresponding map data. You will call <code>initGraph()</code> to make sure that all the cells are initialized. The start and goal position are passed in as <code>Cell</code> structs. <code>Cell</code> has two integer member variables: <code>i</code> and <code>j</code>, corresponding to the row and column coordinates of the cell. You can use the <code>cellToIdx()</code> function to convert these to index values. When the path is found, your code should return a vector of cells, <code>std::vector&ltCell&gt</code>. You can use the provided function <code>tracePath()</code>, as follows:</p>
+                  <p>Assume the graph is loaded with the corresponding map data. The function first calls <code>initGraph()</code> to make sure that all the nodes are initialized. The start and goal position are passed in as <code>Cell</code> structs.<code>Cell</code> has two integer member variables: <code>i</code> and <code>j</code>, corresponding to the row and column coordinates of the cell. When the path is found, your code should return a vector of cells, <code>std::vector&ltCell&gt</code>. You can use the provided function <code>tracePath()</code>, as follows:</p>
                   <pre><code class="language-cpp">path = tracePath(goal_idx, graph);</code></pre>
 
                   <p>where <code>goal_idx</code> is an integer value which stores the index of the goal. If you have correctly maintained the parent structure of the cells and the <code>idxToCell()</code> and <code>getParent()</code> functions are implemented, this will return the path to the start node. The start node should not have a parent. If no path was found, your code should return an empty vector.</p>
 
-                  <p>The function also accepts a <code>connection</code> argument. This is to interface with helper functions which will help you visualize your algorithm in the web app. To mark a cell as visited in the front end, do:</p>
-                  <pre><code class="language-cpp">server_utils::sendVisitedCell(connection, i, j);</code></pre>
+                  <p>The function also accepts a <code>showVisitedCell</code> argument. This is to interface with helper functions which will help you visualize your algorithm in the web app. To mark a cell with coordinate <code>(i, j)</code> as visited (shown in grey) in the web app, do:</p>
+                  <pre><code class="language-cpp">showVisitedCell(i, j);</code></pre>
 
                   <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement Depth First Search in function <code>depthFirstSearch()</code>.</li>
-                  </ul>
-
-                  <ul class="hint">
-                    <li class="icon solid fa-cogs"><strong>Hint:</strong> DFS maintains a list of nodes to visit using a Last-In-First-Out data structure (or a stack). A C++ <code>std::vector</code> can serve this purpose. Assuming you have a vector <code>v</code>, <code>v.push_back(my_node_idx)</code> will push a value onto the stack, <code>v.back()</code> will return the value at the end of the vector (or the top of the stack), and <code>v.pop_back()</code> will remove the last element of the vector.</li>
-                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Your visit list should store integers corresponding to the indices of the nodes of interest. You can use these indices to retrieve and modify cell data directly in the graph. Do not push any structs your graph stores onto the visit list! This makes a <emph>copy</emph> of the data, so any changes you make would not be reflected in the graph.</li>
-                  </ul>
-
-                  <h3 id="sec_bfs">Breadth First Search</h3>
-
-                  <p>In this section, you will write code to implement a <strong>Breadth First Search (BFS)</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>breadthFirstSearch()</code>. This function looks a lot like the one for <a href="#sec_dfs">DFS</a>. Refer to that section for details.</p>
-
-                  <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement Breadth First Search in function <code>breadthFirstSearch()</code>.</li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todo2_1">P3.2.1:</strong>
+                      In the <code>graph_search.cpp</code> file, implement Breadth First Search in function <code>breadthFirstSearch()</code>.
+                    </li>
                   </ul>
 
                   <ul class="hint">
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> BFS maintains a list of nodes to visit using a First-In-First-Out data structure (or a queue). C++ has a queue implementation called <code>std::queue</code>. Assuming you have a queue <code>q</code>, <code>q.push(my_node_idx)</code> will push a value onto the back of the queue, <code>q.front()</code> will return the value at the front of the queue, and <code>q.pop()</code> will remove the first element of the queue.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> Your visit list should store integers corresponding to the indices of the nodes of interest. You can use these indices to retrieve and modify cell data directly in the graph. Do not push any structs your graph stores onto the visit list! This makes a <emph>copy</emph> of the data, so any changes you make would not be reflected in the graph.</li>
                   </ul>
 
-                  <h3 id="sec_astar">A-Star Search</h3>
+                  <h3 id="sec_robot">Part 3: Path Planning on the Robot</h3>
 
-                  <p>In this section, you will write code to implement <strong>A-Star Search</strong> over a graph, given a start and goal cell. Refer to the <a href="https://autorob.org/lectures/autorob_02_graph_search.pdf">lecture material on path planning</a>. Your code should go in the function <code>aStarSearch()</code>. This function looks a lot like the one for <a href="#sec_dfs">DFS</a> and <a href="#sec_bfs">BFS</a>. However, you will need to maintain the f-score of the nodes you explore.</p>
+                  <h3 id="sec_astar">Advanced Extension: A-Star Search</h3>
+
+                  <p>In this section, you will write code to implement <strong>A-Star Search</strong> over a graph, given a start and goal cell. You will write your code in the file <code>src/graph_search/graph_search.cpp</code>. Your code should go in the function <code>aStarSearch()</code>. This function looks a lot like the one for <a href="#sec_bfs">BFS</a>. However, you will need to maintain the f-score of the nodes you explore.</p>
 
                   <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>grid_graph.h</code> file, extend your cell node data to include the f-score of the node.</li>
-                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, implement the function <code>getScore()</code> to return a double corresponding to the f-score of the given cell index.</li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todoAE_3_i">Advanced Extension P3.i:</strong>
+                      In the <code>grid_graph.h</code> file, extend your cell node data to include the f-score of the node.
+                    </li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todoAE_3_ii">Advanced Extension P3.ii:</strong>
+                      In the <code>graph_utils.cpp</code> file, implement the function <code>getScore()</code> to return a double corresponding to the f-score of the given cell index.
+                    </li>
                   </ul>
 
                   <p>In A-Star, the next node to explore is the one with the <emph>lowest f-score</emph>. The function <code>findLowestScore()</code> takes a <code>std::vector</code> of integers as an argument, along with the graph, and returns the index of the lowest score node <emph>in the list</emph>. You can use this function as follows to get the lowest scoring node, and then remove it from the list:</p>
@@ -143,16 +217,43 @@ int current = visit_list[min_score_idx];
 visit_list.erase(visit_list.begin() + min_score_idx);</code></pre>
 
                   <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>graph_search.cpp</code> file, implement A-Star Search in function <code>aStarSearch()</code>.</li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todoAE_3_iii">Advanced Extension P3.iii:</strong>
+                      In the <code>graph_search.cpp</code> file, implement A-Star Search in function <code>aStarSearch()</code>.
+                    </li>
                   </ul>
 
-                  <hr class="major" />
+                </section>
 
-                  <h2 id="robot_instructions">Running your code on the robot</h2>
-                  <p>Donec eget ex magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fergiat. Pellentesque in mi eu massa lacinia malesuada et a elit. Donec urna ex, lacinia in purus ac, pretium pulvinar mauris. Curabitur sapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+                 <!-- TASKS -->
+                 <section id="tasks">
+                  <header class="major">
+                    <h2><a href="#tasks">Task Summary</a></h2>
+                  </header>
 
                 </section>
+
+                <section id="adv_ext">
+                  <header class="major">
+                    <h2><a href="#adv_ext">Advanced Extensions</a></h2>
+                  </header>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">
+                      <strong><a href="#todoAE_3_i">Advanced Extension P3.i</a>:</strong>
+                      In the <code>grid_graph.h</code> file, extend your cell node data to include the f-score of the node.
+                    </li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong><a href="#todoAE_3_ii">Advanced Extension P3.ii</a>:</strong>
+                      In the <code>graph_utils.cpp</code> file, implement the function <code>getScore()</code> to return a double corresponding to the f-score of the given cell index.
+                    </li>
+                    <li class="icon solid fa-laptop-code">
+                      <strong><a href="#todoAE_3_iii">Advanced Extension P3.iii</a>:</strong>
+                      In the <code>graph_search.cpp</code> file, implement A-Star Search in function <code>aStarSearch()</code>.
+                    </li>
+                  </ul>
+
+              </section>
 
             </div>
           </div>
