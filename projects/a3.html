@@ -44,7 +44,7 @@
 
                   <p>In this project, we will write a <strong>path planning algorithm</strong>, which will find the <emph>shortest</emph> path to the goal every time. When you've completed the project, you'll be able to find paths like this one:</p>
 
-                  <span class="image main"><img src="../images/astar_success.png" alt="" style="max-width:600px;"/></span>
+                  <span class="image main"><img src="../images/p3/bfs_path.png" alt="" style="max-width:600px;"/></span>
 
                   <p>We will use the same code base and web app that we did for <a href="a2.html">Project 2</a>. You can review the instructions for running the app and using the Docker container <a href="../tutorials/app.html">here</a>.</p>
 
@@ -109,12 +109,10 @@
 
                   <p>We will be using the same <code>GridGraph</code> struct as last time to do our graph search (see <a href="a2.html#code_utils">Project 2 description</a> for details). In order to perform graph search, we need to keep track of a few things for each cell:</p>
                     <ol>
-                      <!-- <li>The cell coordinate, <code>(i,j)</code>,</li> -->
-                      <!-- <li>The index where the cell is stored in the graph data structure,</li> -->
                       <li>The cell's parent along the current path,</li>
                       <li>The distance from the start node to the cell along the current path,</li>
-                      <li>Whether the cell has been visited,</li>
-                      <li>(A-Star only) The cell's score.</li>
+                      <li>Whether the cell has been visited.</li>
+                      <!-- <li>(A-Star only) The cell's score.</li> -->
                     </ol>
 
                   <p>Using the concepts we have learned so far, design code to store this data. Then, modify <code>GridGraph</code> to store the node information. You may extend your implementation to store any additional information you need.</p>
@@ -146,18 +144,6 @@
                       The start node and unexplored nodes should not have parents.
                     </li>
                   </ul>
-
-                  <!-- <h3>Getting Graph Neighbors</h3> -->
-
-                  <!-- <p>We need a function that returns the neighbors of a cell at a given index. A 4-connected graph considers nodes to the left, right, top, and bottom of a cell as neighbors. An 8-connected graph considers the same nodes as a 4-connected graph plus nodes diagonal to the current node as neighbors.</p> -->
-
-                  <!-- <ul class="todo">
-                    <li class="icon solid fa-laptop-code">In the <code>graph_utils.cpp</code> file, complete functions <code>findNeighbors4()</code> and <code>findNeighbors8()</code> such that they return a vector containing the indices of each neighbor. Include all the neighboring cells regardless of whether they are occupied.</li>
-                  </ul> -->
-
-                  <!-- <ul class="hint">
-                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not include any cells which fall outside the bounds of the graph as neighbors.</li>
-                  </ul> -->
 
                   <h3 id="sec_bfs">Part 2: Breadth First Search</h3>
 
@@ -192,13 +178,40 @@
                   <ul class="hint">
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> BFS maintains a list of nodes to visit using a First-In-First-Out data structure (or a queue). C++ has a queue implementation called <code>std::queue</code>. Assuming you have a queue <code>q</code>, <code>q.push(my_node_idx)</code> will push a value onto the back of the queue, <code>q.front()</code> will return the value at the front of the queue, and <code>q.pop()</code> will remove the first element of the queue.</li>
                     <li class="icon solid fa-cogs"><strong>Hint:</strong> Your visit list should store integers corresponding to the indices of the nodes of interest. You can use these indices to retrieve and modify cell data directly in the graph. Do not push any structs your graph stores onto the visit list! This makes a <emph>copy</emph> of the data, so any changes you make would not be reflected in the graph.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> You should not add any cells which are in collision to your visit list. Use the provided functions to check whether a given node is in collision.</li>
                   </ul>
 
                   <h3 id="sec_robot">Part 3: Path Planning on the Robot</h3>
 
+                  <p>You will write code to search for and drive along a path on the robot in the file <code>src/robot_plan_path.cpp</code>. We have provided a function <code>drivePath(std::vector<Cell>& path, GridGraph& graph)</code> which will send the robot a command to follow the path defined in vector of cells <code>path</code>. This function sends a path to the motion controller. Modify the provided code template to call your path planning algorithm and then send the path to the robot.</p>
+
+                  <ul class="todo">
+                    <li class="icon solid fa-laptop-code">
+                      <strong id="todo3_1">P3.3.1:</strong>
+                      In the <code>robot_plan_path.cpp</code> file, call your path planning function and use the <code>drivePath()</code> function provided to send the path to the robot.
+                    </li>
+                  </ul>
+
+                  <ul class="hint">
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> If you are using the <code>checkCollision()</code> function in your graph search, do not forget to call your distance transform function after the map is loaded.</li>
+                    <li class="icon solid fa-cogs"><strong>Hint:</strong> The provided function <code>drivePath()</code> returns immediately after sending the path command to motion controller. That means your program will quit before the robot has reached the goal. If you wish to send another path to the robot or perform some processing when the robot has reached the goal, you can write code to wait until the robot has reached the goal before finishing.</li>
+                  </ul>
+
+                  <p>Before you run the code, you should <a href="../labs/lab4_navigation_workflow.pdf">make a map</a> of the environment you want to run in. Once you have made a map, launch localization (with motion controller) as follows:</p>
+                  <pre><code class="language-bash">~/botlab-bin/launch_botlab.sh -m [PATH/TO/MAP]</code></pre>
+
+                  <p>To compile and run path planning on the robot, connect to the robot using VSCode (as described in the <a href="../tutorials/robot.html#sec_robot_prog">robot tutorial</a>). Then, from inside the repository you cloned onto the robot, compile as follows:</p>
+                  <pre><code class="language-bash">cd build
+cmake -DOMNIBOT=On ..
+make</code></pre>
+
+                  <p>Do not forget the argument <code>-DOMNIBOT=On</code> when running CMake. This is how the compiler knows whether to compile the robot code (which is not compiled by default in the Docker). To run the potential field controller, in the <code>build</code> folder where you compiled, do:</p>
+                  <pre><code class="language-bash">./robot_plan_path [PATH/TO/MAP] [goal_x] [goal_y]</code></pre>
+                  <p>The map is stored in <code>~/botlab-bin/maps/current.map</code>. Use that path if you did not move the map since creating it. You can also pass in <code>goal_x</code> and <code>goal_y</code>, the global position of the goal, relative to the starting position of your map, in meters. If you do not pass these in, they will default to zero.</p>
+
                   <h3 id="sec_astar">Advanced Extension: A-Star Search</h3>
 
-                  <p>In this section, you will write code to implement <strong>A-Star Search</strong> over a graph, given a start and goal cell. You will write your code in the file <code>src/graph_search/graph_search.cpp</code>. Your code should go in the function <code>aStarSearch()</code>. This function looks a lot like the one for <a href="#sec_bfs">BFS</a>. However, you will need to maintain the f-score of the nodes you explore.</p>
+                  <p>As an advanced extension, you may write code to implement <strong>A-Star Search</strong> over a graph, given a start and goal cell. You will write your code in the file <code>src/graph_search/graph_search.cpp</code>. Your code should go in the function <code>aStarSearch()</code>. This function looks a lot like the one for <a href="#sec_bfs">BFS</a>. However, you will need to maintain the f-score of the nodes you explore.</p>
 
                   <ul class="todo">
                     <li class="icon solid fa-laptop-code">
